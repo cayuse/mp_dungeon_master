@@ -5,6 +5,8 @@ from direct.distributed.PyDatagramIterator import PyDatagramIterator
 from direct.actor.Actor import Actor
 from direct.task.Task import Task
 from direct.gui.DirectGui import *
+base.enableParticles()
+from direct.particles.ParticleEffect import ParticleEffect
 import sys
 
 
@@ -38,22 +40,28 @@ class Terrain(GeoMipTerrain):
         self.terrain = GeoMipTerrain("mySimpleTerrain")
         self.terrain.setHeightfield(Filename("terrains/ramp_HM.png"))
         self.terrain.setColorMap(
-            Filename("terrains/ramp_TM.png"))  # pjb comment this line out if you want to set texture directly
+            Filename("terrains/red-rock.jpg"))  # pjb comment this line out if you want to set texture directly
         # myTexture = loader.loadTexture("terrain.bmp") #pjb UNcomment this line out if you want to set texture directly
         self.terrain.setBlockSize(32)
         self.terrain.setBruteforce(True)
         # self.terrain.setNear(40)
         # self.terrain.setFar(100)
         self.terrain.setFocalPoint(base.camera)
-        self.terrain.getRoot().setSz(50)
+        self.terrain.getRoot().setSz(12)
         self.time = 0
         self.elapsed = 0
         self.terrain.getRoot().reparentTo(render)
         self.terrain.generate()
+        self.roof = loader.loadModel("terrains/roof.egg")
+        self.roof.setPosHprScale(0,257,18,0,180,0,1,1,1)
+        #self.box.setScale(2)
+        #self.box.setColor(1,1,0)
+        rooftex = loader.loadTexture("terrains/roof_TM.png")
+        self.roof.setTexture(rooftex, 1)
+        self.roof.reparentTo(render)
         # self.terrain.getRoot().setTexture(myTexture) #pjb UNcomment this line out if you want to set texture directly
         # taskMgr.doMethodLater(5, self.updateTerrain, 'Update the Terrain')
         # taskMgr.add(self.updateTerrain, "update")
-
     def updateTerrain(self, task):
         self.elapsed = globalClock.getDt()
         self.time += self.elapsed
@@ -141,6 +149,37 @@ class PlayerReg(DirectObject):  # This class will regulate the players
 
 class Me(DirectObject):
     def __init__(self, terrainClass):
+        self.torch = loader.loadModel("models/wall-torch")
+        tex = loader.loadTexture("models/rocks.jpg")
+        self.torch.setTexture(tex,1)
+        self.torch.reparentTo(render)
+        self.torch.setPosHprScale(182.0398,197.2269,8,0,90,0,0.1,0.1,0.1)
+        p = ParticleEffect()
+
+        p.loadConfig("particles/fireish.ptf")
+        p.start(parent=self.torch, renderParent=render)
+
+        plight = PointLight('plight')
+        plight.setColor(Vec4(30, 15, 5, 1))
+        plnp = render.attachNewNode(plight)
+        plnp.setPos(Vec3(182,192, 11))
+        plight.setAttenuation((0, 0, 0.1))
+        render.setLight(plnp)
+        #plnp = lightpivot.attachNewNode(plight)
+        self.torch.setShaderInput("light", plnp)
+        '''
+        slight = Spotlight('slight')
+        slight.setColor(Vec4(30, 15, 5, 1))
+        lens = PerspectiveLens()
+        slight.setLens(lens)
+        slnp = render.attachNewNode(slight)
+        slnp.setPos(182,192, 11)
+        slnp.setHpr(0, 90, 0)
+        #slnp.lookAt(myObject)
+        render.setLight(slnp)
+        '''
+
+
         self.model = Actor("models/ralph",
                            {"run": "models/ralph-run",
                             "walk": "models/ralph-walk"})
@@ -154,7 +193,7 @@ class Me(DirectObject):
         self.AnimControl = self.model.getAnimControl('walk')
         self.AnimControl.setPlayRate(0.05)
         self.model.setBlend(frameBlend=1)
-        self.model.setPos(179, 177, 0)
+        self.model.setPos(179, 177,0)
         # STORE TERRAIN SCALE FOR LATER USE#
         self.terrainScale = terrainClass.terrain.getRoot().getSz()
         base.camera.reparentTo(self.model)
@@ -171,7 +210,7 @@ class Me(DirectObject):
         # base.camera.lookAt(self.actorHead)
         if (keyClass.keyMap["left"] != 0):
             self.model.setH(self.model.getH() + self.elapsed * 300)
-            print str(self.model.getY()), str(self.model.getX())
+            print str(self.model.getX()), str(self.model.getY()), str(self.model.getZ())
         if (keyClass.keyMap["right"] != 0):
             self.model.setH(self.model.getH() - self.elapsed * 300)
         if (keyClass.keyMap["forward"] != 0):
@@ -181,7 +220,7 @@ class Me(DirectObject):
 
         if (keyClass.keyMap["forward"] != 0) or (keyClass.keyMap["left"] != 0) or (keyClass.keyMap["right"] != 0):
             if self.isMoving is False:
-                self.model.loop("walk", fromFrame=1, toFrame=11)
+                self.model.loop("walk")
                 self.isMoving = True
         else:
             if self.isMoving:
@@ -308,7 +347,9 @@ class Player(DirectObject):
         self.username = ""
 
     def load(self):
-        self.model = Actor("models/ninja", {"walk": "models/ninja"})
+        self.model = Actor("models/ralph",
+                           {"run": "models/ralph-run",
+                            "walk": "models/ralph-walk"})
         self.model.reparentTo(render)
         self.model.setScale(0.5)
         self.isMoving = False

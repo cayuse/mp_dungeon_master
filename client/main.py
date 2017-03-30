@@ -31,20 +31,20 @@ taskMgr.add(w.UpdateWorld,"keep the world up to date",extraArgs = [me,worldClien
 #test code for lighting, normal mapping, etc...#
 #ambient light
 alight = AmbientLight('alight')
-alight.setColor(Vec4(0.2, 0.2, 0.2, 1))
+alight.setColor(Vec4(0.1, 0.1, 0.1, 0.1))
 alnp = render.attachNewNode(alight)
 render.setLight(alnp)
 me.model.setShaderAuto()
 #me.model.setNormalMap("models/nskinrd-normal.jpg")
 
 
-lightpivot = render.attachNewNode("lightpivot")
-lightpivot.setPos(0,0,25)
-plight = PointLight('plight')
-plight.setColor(Vec4(1, 1, 1, 1))
-plnp = lightpivot.attachNewNode(plight)
-render.setLight(plnp)
-me.model.setShaderInput("light", plnp)
+#lightpivot = render.attachNewNode("lightpivot")
+#lightpivot.setPos(0,0,25)
+#plight = PointLight('plight')
+#plight.setColor(Vec4(1, 1, 1, 1))
+#plnp = lightpivot.attachNewNode(plight)
+#render.setLight(plnp)
+#me.model.setShaderInput("light", plnp)
 #=============================================================================#
 #Castle = Castle(Vec3(288.96,294.45,30.17), Vec3(119.05,270,0),0.08)
 run()
