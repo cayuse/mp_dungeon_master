@@ -278,23 +278,23 @@ class Keys(DirectObject):
         #Quits game
         self.accept("escape", sys.exit)
 
-        self.accept(",", self.setControl, ["forward", 1])
-        self.accept(",-up", self.setControl, ["forward", 0])
-        self.accept("w", self.setControl, ["forward", 1])
-        self.accept("w-up", self.setControl, ["forward", 0])
+        self.accept(",", self.setKey, ["forward", 1])
+        self.accept(",-up", self.setKey, ["forward", 0])
+        self.accept("w", self.setKey, ["forward", 1])
+        self.accept("w-up", self.setKey, ["forward", 0])
 
-        self.accept("a", self.setControl, ["left", 1])
-        self.accept("a-up", self.setControl, ["left", 0])
+        self.accept("a", self.setKey, ["left", 1])
+        self.accept("a-up", self.setKey, ["left", 0])
 
-        self.accept("o", self.setControl, ["backward", 1])
-        self.accept("o-up", self.setControl, ["backward", 0])
-        self.accept("d", self.setControl, ["backward", 1])
-        self.accept("d-up", self.setControl, ["backward", 0])
+        self.accept("o", self.setKey, ["back", 1])
+        self.accept("o-up", self.setKey, ["back", 0])
+        self.accept("d", self.setKey, ["back", 1])
+        self.accept("d-up", self.setKey, ["back", 0])
 
-        self.accept("e", self.setControl, ["right", 1])
-        self.accept("e-up", self.setControl, ["right", 0])
-        self.accept("s", self.setControl, ["right", 1])
-        self.accept("s-up", self.setControl, ["right", 0])
+        self.accept("e", self.setKey, ["right", 1])
+        self.accept("e-up", self.setKey, ["right", 0])
+        self.accept("s", self.setKey, ["right", 1])
+        self.accept("s-up", self.setKey, ["right", 0])
 
 
     def setKey(self, key, value):
