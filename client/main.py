@@ -35,7 +35,7 @@ taskMgr.add(w.UpdateWorld,"keep the world up to date",extraArgs = [me,worldClien
 #test code for lighting, normal mapping, etc...#
 #ambient light
 alight = AmbientLight('alight')
-alight.setColor(Vec4(0.1, 0.1, 0.1, 0.1))
+alight.setColor(Vec4(0.7, 0.7, 0.7, 0.1))
 alnp = render.attachNewNode(alight)
 render.setLight(alnp)
 me.model.setShaderAuto()
@@ -51,5 +51,5 @@ me.model.setShaderAuto()
 #me.model.setShaderInput("light", plnp)
 #=============================================================================#
 #Castle = Castle(Vec3(288.96,294.45,30.17), Vec3(119.05,270,0),0.08)
-run()
+base.run()
 

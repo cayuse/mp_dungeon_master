@@ -38,7 +38,7 @@ class Terrain(GeoMipTerrain):
         self.terrain = GeoMipTerrain("mySimpleTerrain")
         self.terrain.setHeightfield(Filename("terrains/ramp_HM.png"))
         self.terrain.setColorMap(
-            Filename("terrains/red-rock.jpg"))  # pjb comment this line out if you want to set texture directly
+            Filename("nav2.png"))  # pjb comment this line out if you want to set texture directly
         # myTexture = loader.loadTexture("terrain.bmp") #pjb UNcomment this line out if you want to set texture directly
         self.terrain.setBlockSize(32)
         self.terrain.setBruteforce(True)

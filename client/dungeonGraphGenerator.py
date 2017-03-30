@@ -17,7 +17,7 @@ except ImportError:
 WORLD_HEIGHT = 257  # does not have to be square
 WORLD_WIDTH =  257  # both should be 2 ** x + 1 (x > 0)
 BUF = 4  # minimum number of pixels between any two rooms we place
-HIGH = 65535
+HIGH = 30000
 LOW = 0
 
 # we are still using globals.. get over it.. we are  fiddling
@@ -89,13 +89,13 @@ for ww in widths:
     if add:
         cx = xx + ww / 2.0
         cy = yy + hh / 2.0
+        print "( ",
+        print cx,
+        print ", ",
+        print cy,
+        print " ),"
         zz = np.random.randint(5000) + 20000
         zz = LOW
-        print "( ",
-        print cy,
-        print ", ",
-        print cx,
-        print " ),"
         dungeon_graph.add_node(a,x = xx, y = yy, z = zz, w = ww, h = hh, cx = cx, cy = cy)
         # next add an edge to all existing rooms
         for let in range(0, a-1):
@@ -112,13 +112,6 @@ for node in dungeon_graph.nodes(data=True):
         for dotx in range(origx, origx + node[1]['w']):
             canvas[dotx][doty] = origz
             ai_canvas[dotx][doty] = 0
-    '''
-    canvas[origx,origy] = 30000
-    canvas[origx+1, origy] = 30000
-    canvas[origx-1, origy] = 30000
-    canvas[origx,origy-1] = 30000
-    canvas[origx,origy+1] = 30000
-    '''
 ## get a MST from the original graph, call it mst_dungeon
 mst_dungeon = nx.minimum_spanning_tree(dungeon_graph)
 
@@ -180,7 +173,6 @@ for x in range(0,WORLD_WIDTH): #step by fives
 #after we fuzz the rooms, we  will bore the tunnels
 
 # this is a version of the 'drunkards walk' to connect the rooms that have joining edges
-
 for edge in mst_dungeon.edges(data=True):
     not_there = True
     node_a = mst_dungeon.node[edge[0]]
@@ -249,32 +241,24 @@ for edge in mst_dungeon.edges(data=True):
         not_there = False
       #print start, stop
 
-#  This code will attempt to give torch coordinates.
-for node in dungeon_graph.nodes(data=True):
-    #randomly pick a wall north, east, south, west 0-3
-    dir = np.random.randint(4)
-    if dir == 0:  #north
-        x = node['x']
-        cy = node['cy']
-        for i in range():
-          None
-
-
 # attemp to perterb the data a little
 # for times in range(0,10):
 #for x in range(0, WORLD_WIDTH ):  # step by fives
 #    for y in range(0, WORLD_HEIGHT ):  # step by fives
 #        canvas[x][y] = canvas[x][y] + np.random.randint(200) - 100
 
+canvas[255][0] = 65535
+canvas[255][255] = 65535
+
 # this gets used a bunch later
 norm = mpl.colors.Normalize(np.min(canvas), np.max(canvas))
 
 
-## if all is right, we should have a nice 2d array, and we should be able to create a png out of it.
-#f = open('ramp_HM.png', 'wb')      # binary mode is important
-#w = png.Writer(WORLD_HEIGHT, WORLD_WIDTH, bitdepth=16, greyscale=True)
-#w.write(f, canvas)
-#f.close()
+# if all is right, we should have a nice 2d array, and we should be able to create a png out of it.
+f = open('terrains/ramp_HM.png', 'wb')      # binary mode is important
+w = png.Writer(WORLD_HEIGHT, WORLD_WIDTH, bitdepth=16, greyscale=True)
+w.write(f, canvas)
+f.close()
 
 #f = open('nav1.png', 'wb')      # binary mode is important
 #w = png.Writer(WORLD_HEIGHT, WORLD_WIDTH, bitdepth=16, greyscale=True)
@@ -282,22 +266,25 @@ norm = mpl.colors.Normalize(np.min(canvas), np.max(canvas))
 #f.close()
 cmap = plt.cm.RdGy_r
 image = cmap(norm(canvas))
-plt.imsave('../server/terrains/nav1.png', image)
+plt.imsave('nav1.png', image)
+test = np.flipud(canvas)
+image = cmap(norm(test))
+plt.imsave('nav2.png', image)
 
 # if all is right, we should have a nice 2d array, and we should be able to create a png out of it.
-f = open('terrains/ramp_HM.png', 'wb')  # binary mode is important
-w = png.Writer(WORLD_HEIGHT, WORLD_WIDTH, bitdepth=16, greyscale=True)
-#w = png.Writer(WORLD_HEIGHT, WORLD_WIDTH, greyscale=True)
-w.write(f, canvas.tolist())
-f.close()
+#f = open('ramp_HM.png', 'wb')  # binary mode is important
+#w = png.Writer(WORLD_HEIGHT, WORLD_WIDTH, bitdepth=16, greyscale=True)
+##w = png.Writer(WORLD_HEIGHT, WORLD_WIDTH, greyscale=True)
+#w.write(f, canvas.tolist())
+#f.close()
 
         
-#cmap = plt.cm.gist_earth
-#image = cmap(norm(canvas))
-#plt.imsave('terrains/ramp_TM.png', image)
+cmap = plt.cm.gist_earth
+image = cmap(norm(canvas))
+plt.imsave('terrains/ramp_TM.png', image)
 
-#swapped = np.flipud(canvas)
-#image = cmap(norm(swapped))
-#plt.imsave('ramp_TM.png', image)
+swapped = np.flipud(canvas)
+image = cmap(norm(swapped))
+plt.imsave('ramp_TM.png', image)
 
 ## next we are going to dump a Yaml description of the dungeon
