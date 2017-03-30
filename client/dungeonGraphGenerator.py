@@ -89,8 +89,11 @@ for ww in widths:
     if add:
         cx = xx + ww / 2.0
         cy = yy + hh / 2.0
+        print "( ",
+        print cy,
+        print ", ",
         print cx,
-        print cy
+        print " ),"
         zz = np.random.randint(5000) + 20000
         zz = LOW
         dungeon_graph.add_node(a,x = xx, y = yy, z = zz, w = ww, h = hh, cx = cx, cy = cy)
@@ -109,6 +112,13 @@ for node in dungeon_graph.nodes(data=True):
         for dotx in range(origx, origx + node[1]['w']):
             canvas[dotx][doty] = origz
             ai_canvas[dotx][doty] = 0
+    '''
+    canvas[origx,origy] = 30000
+    canvas[origx+1, origy] = 30000
+    canvas[origx-1, origy] = 30000
+    canvas[origx,origy-1] = 30000
+    canvas[origx,origy+1] = 30000
+    '''
 ## get a MST from the original graph, call it mst_dungeon
 mst_dungeon = nx.minimum_spanning_tree(dungeon_graph)
 
@@ -170,6 +180,7 @@ for x in range(0,WORLD_WIDTH): #step by fives
 #after we fuzz the rooms, we  will bore the tunnels
 
 # this is a version of the 'drunkards walk' to connect the rooms that have joining edges
+
 for edge in mst_dungeon.edges(data=True):
     not_there = True
     node_a = mst_dungeon.node[edge[0]]
@@ -199,15 +210,6 @@ for edge in mst_dungeon.edges(data=True):
       ai_canvas[cur[0]+2][cur[1]] = 0
       ai_canvas[cur[0]][cur[1]-2] = 0
       ai_canvas[cur[0]][cur[1]+2] = 0
-
-
-
-
-
-
-
-
-
 
       #plt.plot( start[1],start[0], 'or')
       #roll to see if we are going to go in the right direction
@@ -257,11 +259,11 @@ for edge in mst_dungeon.edges(data=True):
 norm = mpl.colors.Normalize(np.min(canvas), np.max(canvas))
 
 
-# if all is right, we should have a nice 2d array, and we should be able to create a png out of it.
-f = open('ramp_HM.png', 'wb')      # binary mode is important
-w = png.Writer(WORLD_HEIGHT, WORLD_WIDTH, bitdepth=16, greyscale=True)
-w.write(f, canvas)
-f.close()
+## if all is right, we should have a nice 2d array, and we should be able to create a png out of it.
+#f = open('ramp_HM.png', 'wb')      # binary mode is important
+#w = png.Writer(WORLD_HEIGHT, WORLD_WIDTH, bitdepth=16, greyscale=True)
+#w.write(f, canvas)
+#f.close()
 
 #f = open('nav1.png', 'wb')      # binary mode is important
 #w = png.Writer(WORLD_HEIGHT, WORLD_WIDTH, bitdepth=16, greyscale=True)
@@ -272,19 +274,19 @@ image = cmap(norm(canvas))
 plt.imsave('../server/terrains/nav1.png', image)
 
 # if all is right, we should have a nice 2d array, and we should be able to create a png out of it.
-f = open('ramp_HM.png', 'wb')  # binary mode is important
+f = open('terrains/ramp_HM.png', 'wb')  # binary mode is important
 w = png.Writer(WORLD_HEIGHT, WORLD_WIDTH, bitdepth=16, greyscale=True)
 #w = png.Writer(WORLD_HEIGHT, WORLD_WIDTH, greyscale=True)
 w.write(f, canvas.tolist())
 f.close()
 
         
-cmap = plt.cm.gist_earth
-image = cmap(norm(canvas))
-plt.imsave('models/ramp_TM.png', image)
+#cmap = plt.cm.gist_earth
+#image = cmap(norm(canvas))
+#plt.imsave('terrains/ramp_TM.png', image)
 
-swapped = np.flipud(canvas)
-image = cmap(norm(swapped))
-plt.imsave('ramp_TM.png', image)
+#swapped = np.flipud(canvas)
+#image = cmap(norm(swapped))
+#plt.imsave('ramp_TM.png', image)
 
 ## next we are going to dump a Yaml description of the dungeon

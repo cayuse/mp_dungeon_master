@@ -5,8 +5,6 @@ from direct.distributed.PyDatagramIterator import PyDatagramIterator
 from direct.actor.Actor import Actor
 from direct.task.Task import Task
 from direct.gui.DirectGui import *
-base.enableParticles()
-from direct.particles.ParticleEffect import ParticleEffect
 import sys
 
 
@@ -149,36 +147,6 @@ class PlayerReg(DirectObject):  # This class will regulate the players
 
 class Me(DirectObject):
     def __init__(self, terrainClass):
-        self.torch = loader.loadModel("models/wall-torch")
-        tex = loader.loadTexture("models/rocks.jpg")
-        self.torch.setTexture(tex,1)
-        self.torch.reparentTo(render)
-        self.torch.setPosHprScale(182.0398,197.2269,8,0,90,0,0.1,0.1,0.1)
-        p = ParticleEffect()
-
-        p.loadConfig("particles/fireish.ptf")
-        p.start(parent=self.torch, renderParent=render)
-
-        plight = PointLight('plight')
-        plight.setColor(Vec4(30, 15, 5, 1))
-        plnp = render.attachNewNode(plight)
-        plnp.setPos(Vec3(182,192, 11))
-        plight.setAttenuation((0, 0, 0.1))
-        render.setLight(plnp)
-        #plnp = lightpivot.attachNewNode(plight)
-        self.torch.setShaderInput("light", plnp)
-        '''
-        slight = Spotlight('slight')
-        slight.setColor(Vec4(30, 15, 5, 1))
-        lens = PerspectiveLens()
-        slight.setLens(lens)
-        slnp = render.attachNewNode(slight)
-        slnp.setPos(182,192, 11)
-        slnp.setHpr(0, 90, 0)
-        #slnp.lookAt(myObject)
-        render.setLight(slnp)
-        '''
-
 
         self.model = Actor("models/ralph",
                            {"run": "models/ralph-run",
@@ -193,7 +161,8 @@ class Me(DirectObject):
         self.AnimControl = self.model.getAnimControl('walk')
         self.AnimControl.setPlayRate(0.05)
         self.model.setBlend(frameBlend=1)
-        self.model.setPos(179, 177,0)
+        #start position
+        self.model.setPos(214.5,257-195.5,0)
         # STORE TERRAIN SCALE FOR LATER USE#
         self.terrainScale = terrainClass.terrain.getRoot().getSz()
         base.camera.reparentTo(self.model)
@@ -306,18 +275,27 @@ class Keys(DirectObject):
     def __init__(self):
         self.isTyping = False
         self.keyMap = {"left": 0, "right": 0, "forward": 0, "back": 0, "cam": 0, "right": 0, "autoRun": 0}
+        #Quits game
         self.accept("escape", sys.exit)
-        self.accept("arrow_left", self.setKey, ["left", 1])
-        self.accept("arrow_right", self.setKey, ["right", 1])
-        self.accept("arrow_up", self.setKey, ["forward", 1])
-        self.accept("arrow_down", self.setKey, ["back", 1])
-        self.accept("arrow_left-up", self.setKey, ["left", 0])
-        self.accept("arrow_right-up", self.setKey, ["right", 0])
-        self.accept("arrow_up-up", self.setKey, ["forward", 0])
-        self.accept("arrow_down-up", self.setKey, ["back", 0])
-        self.accept("c", self.toggleCam)
-        self.accept(".", self.autoRun)
-        # self.accept("a", base.oobe)
+
+        self.accept(",", self.setControl, ["forward", 1])
+        self.accept(",-up", self.setControl, ["forward", 0])
+        self.accept("w", self.setControl, ["forward", 1])
+        self.accept("w-up", self.setControl, ["forward", 0])
+
+        self.accept("a", self.setControl, ["left", 1])
+        self.accept("a-up", self.setControl, ["left", 0])
+
+        self.accept("o", self.setControl, ["backward", 1])
+        self.accept("o-up", self.setControl, ["backward", 0])
+        self.accept("d", self.setControl, ["backward", 1])
+        self.accept("d-up", self.setControl, ["backward", 0])
+
+        self.accept("e", self.setControl, ["right", 1])
+        self.accept("e-up", self.setControl, ["right", 0])
+        self.accept("s", self.setControl, ["right", 1])
+        self.accept("s-up", self.setControl, ["right", 0])
+
 
     def setKey(self, key, value):
         if not self.isTyping:
@@ -330,14 +308,6 @@ class Keys(DirectObject):
         else:
             self.setKey("autoRun", 0)
             self.setKey("forward", 0)
-
-    def toggleCam(self):
-        if self.keyMap["cam"] == 1:
-            self.setKey("cam", 2)
-        elif self.keyMap["cam"] == 0:
-            self.setKey("cam", 1)
-        else:
-            self.setKey("cam", 0)
 
 
 class Player(DirectObject):

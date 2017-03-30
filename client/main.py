@@ -6,6 +6,7 @@ from direct.distributed.PyDatagram import PyDatagram
 from direct.distributed.PyDatagramIterator import PyDatagramIterator 
 from direct.actor.Actor import Actor
 from client import *
+from torches import *
 from MapObjects import *
 import sys
 
@@ -20,6 +21,7 @@ N = PlayerReg()
 me = Me(Terrain)
 keys = Keys()
 w = World()
+Torches()
 chatReg = chatRegulator(worldClient,keys)
 
 taskMgr.add(N.updatePlayers,"keep every player where they are supposed to be",extraArgs = [me])
