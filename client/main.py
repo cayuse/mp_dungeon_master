@@ -1,7 +1,7 @@
 import direct.directbase.DirectStart
 from direct.showbase.DirectObject import DirectObject
 from direct.task.Task import Task
-from pandac.PandaModules import *
+from panda3d.core import *
 from direct.distributed.PyDatagram import PyDatagram
 from direct.distributed.PyDatagramIterator import PyDatagramIterator 
 from direct.actor.Actor import Actor
