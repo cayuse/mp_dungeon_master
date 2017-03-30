@@ -29,7 +29,7 @@ for x in range(0,WORLD_WIDTH):
         canvas[x][y] = HIGH
         ai_canvas[x][y] = 65535
 # here we make a certain number of room "widths" (second arg) with a poisson distribution around the first arg
-widths = np.random.poisson(30, 400)
+widths = np.random.poisson(25, 400)
 
 # we have considered a special room that acts as a 'front door' but haven't implemented it
 # problem: not all levels will have a front door on the same edge, only level 1, consider for later
@@ -89,13 +89,13 @@ for ww in widths:
     if add:
         cx = xx + ww / 2.0
         cy = yy + hh / 2.0
+        zz = np.random.randint(5000) + 20000
+        zz = LOW
         print "( ",
         print cy,
         print ", ",
         print cx,
         print " ),"
-        zz = np.random.randint(5000) + 20000
-        zz = LOW
         dungeon_graph.add_node(a,x = xx, y = yy, z = zz, w = ww, h = hh, cx = cx, cy = cy)
         # next add an edge to all existing rooms
         for let in range(0, a-1):
@@ -248,6 +248,17 @@ for edge in mst_dungeon.edges(data=True):
       if cur[0] == stop[0] and cur[1] == stop[1]:
         not_there = False
       #print start, stop
+
+#  This code will attempt to give torch coordinates.
+for node in dungeon_graph.nodes(data=True):
+    #randomly pick a wall north, east, south, west 0-3
+    dir = np.random.randint(4)
+    if dir == 0:  #north
+        x = node['x']
+        cy = node['cy']
+        for i in range():
+          None
+
 
 # attemp to perterb the data a little
 # for times in range(0,10):
