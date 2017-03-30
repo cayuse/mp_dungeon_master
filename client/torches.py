@@ -4,36 +4,41 @@ base.enableParticles()
 from direct.particles.ParticleEffect import ParticleEffect
 import sys
 
-class Torches(DirectObject):  # This class will regulate the players
+class Torches(DirectObject):
     def __init__(self):
-        torches = [ (  122.5 ,  213.5  ),
-(  150.0 ,  136.0  ),
-(  91.0 ,  138.0  ),
-(  197.0 ,  79.0  ),
-(  180.5 ,  35.5  ),
-(  237.5 ,  12.0  ),
-(  30.5 ,  111.5  ),
-(  171.5 ,  189.0  ),
-(  209.0 ,  169.0  ),
-(  93.0 ,  178.5  ),
-(  123.5 ,  93.0  ),
-(  82.0 ,  24.0  ),
-(  233.0 ,  99.5  ),
-(  119.0 ,  28.0  ),
-(  50.0 ,  224.5  ),
-(  75.0 ,  79.0  ),
-(  224.0 ,  236.5  ),
-(  24.5 ,  47.0  ),
-(  193.5 ,  131.5  ),
-(  237.0 ,  160.0  ),
-(  29.0 ,  158.5  ),
-(  154.5 ,  237.0  ),
-(  34.0 ,  193.5  ),
-(  239.0 ,  199.5  ),
-(  45.0 ,  16.5  ),
-(  163.5 ,  84.5  ),
-(  138.0 ,  167.0  ),
-(  230.5 ,  53.5  )]
+        torches = [(  197.0 ,  240.0  ),
+(  117.0 ,  85.0  ),
+(  52.0 ,  159.5  ),
+(  33.5 ,  35.0  ),
+(  153.5 ,  212.5  ),
+(  101.0 ,  221.5  ),
+(  37.5 ,  118.5  ),
+(  69.0 ,  17.0  ),
+(  175.0 ,  27.0  ),
+(  45.0 ,  216.5  ),
+(  198.5 ,  147.0  ),
+(  205.5 ,  86.5  ),
+(  241.0 ,  89.0  ),
+(  23.0 ,  195.5  ),
+(  128.0 ,  40.5  ),
+(  98.0 ,  176.0  ),
+(  52.5 ,  74.5  ),
+(  22.5 ,  69.0  ),
+(  212.5 ,  198.0  ),
+(  88.5 ,  127.0  ),
+(  122.5 ,  136.0  ),
+(  162.5 ,  83.5  ),
+(  236.5 ,  52.0  ),
+(  233.0 ,  138.5  ),
+(  9.0 ,  150.0  ),
+(  76.0 ,  101.0  ),
+(  230.5 ,  19.0  ),
+(  170.5 ,  175.5  ),
+(  136.0 ,  170.0  ),
+(  158.5 ,  121.0  ),
+(  77.5 ,  205.0  ),
+(  37.0 ,  10.0  ),
+(  43.5 ,  187.5  )]
         tex = loader.loadTexture("models/rocks.jpg")
         for torch in torches:
             self.torch = loader.loadModel("models/wall-torch")
@@ -51,7 +56,7 @@ class Torches(DirectObject):  # This class will regulate the players
             plight.setAttenuation((1, 0, 0.5))
             render.setLight(plnp)
             #plnp = lightpivot.attachNewNode(plight)
-            self.torch.setShaderInput("light", plnp)
+            #self.torch.setShaderAuto()
 
             '''
             slight = Spotlight('slight')
