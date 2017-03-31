@@ -173,26 +173,37 @@ class Me(DirectObject):
         # STORE TERRAIN SCALE FOR LATER USE#
         self.terrainScale = terrainClass.terrain.getRoot().getSz()
         base.camera.reparentTo(self.model)
+        self.cameraTargetHeight = 3.0
+        # How far should the camera be from Model
+        self.cameraDistance = 30
+        # Initialize the pitch of the camera
+        self.cameraPitch = 10
+
         self.camDummy = self.model.attachNewNode("camDummy")
         self.camDummy.setZ(5)
+        base.disableMouse()
+        props = WindowProperties()
+        props.setCursorHidden(True)
+        base.win.requestProperties(props)
 
     def setPlayerNum(self, int):
         self.playernum = int
 
     def move(self, keyClass, terrainClass):
+        speed = 40
         # self.meTerrainHeight = terrainClass.terrain.getElevation(self.model.getX(),self.model.getY()) * self.terrainScale
         # self.camTerrainHeight = terrainClass.terrain.getElevation(camera.getX(),camera.getY()) * self.terrainScale
         self.elapsed = globalClock.getDt()
         # base.camera.lookAt(self.actorHead)
         if (keyClass.keyMap["left"] != 0):
-            self.model.setH(self.model.getH() + self.elapsed * 300)
+            self.model.setX(self.model, (self.elapsed * speed))
             print str(self.model.getX()), str(self.model.getY()), str(self.model.getZ())
         if (keyClass.keyMap["right"] != 0):
-            self.model.setH(self.model.getH() - self.elapsed * 300)
+            self.model.setX(self.model, -(self.elapsed * speed))
         if (keyClass.keyMap["forward"] != 0):
-            self.model.setY(self.model, (self.elapsed * 40))
+            self.model.setY(self.model, -(self.elapsed * speed))
         if (keyClass.keyMap["back"] != 0):
-            self.model.setY(self.model, -(self.elapsed * 40))
+            self.model.setY(self.model, (self.elapsed * speed))
 
         if (keyClass.keyMap["forward"] != 0) or (keyClass.keyMap["left"] != 0) or (keyClass.keyMap["right"] != 0):
             if self.isMoving is False:
@@ -209,44 +220,29 @@ class Me(DirectObject):
         self.model.setZ(self.meTerrainHeight)
 
         # CAMERA CONTROL#
-
-
-        # base.camera.reparentTo(self.model)
-        base.camera.lookAt(self.camDummy)
-        base.camLens.setNear(.1)
-
-        if (keyClass.keyMap["cam"] == 1):
-            # base.camera.setZ(5)
-            # base.camera.setY(1)
-            base.disableMouse()
-            base.camera.setPosHpr(0, 2, 5, 0, 0, 0)
-
-        elif (keyClass.keyMap["cam"] == 2):
-            # base.camera.setPosHpr(0,-30,10,0,0,0)
-            base.enableMouse()
-        else:
-            base.disableMouse()
-            base.camera.setPosHpr(0, -30, 10, 0, 0, 0)
-            # base.camera.setZ(10)
-            # base.camera.setY(-30)
-
-        """
-       
-        self.camvec = self.model.getPos() - base.camera.getPos()
-        if (self.camTerrainHeight > self.meTerrainHeight):
-          camera.setZ(self.camTerrainHeight + 5)
-        else:
-          camera.setZ(self.meTerrainHeight + 5)
-        self.camvec.setZ(0)
-        self.camdist = self.camvec.length()
-        self.camvec.normalize()
-        if (self.camdist > 20):
-          base.camera.setPos(base.camera.getPos() + self.camvec*(self.camdist-20))
-          self.camdist = 20.0
-        if (self.camdist < 10):
-          base.camera.setPos(base.camera.getPos() - self.camvec*(10-self.camdist))
-          self.camdist = 10.0
-        """
+        if base.mouseWatcherNode.hasMouse():
+            # get changes in mouse position
+            md = base.win.getPointer(0)
+            x = md.getX()
+            y = md.getY()
+            deltaX = md.getX() - 200
+            deltaY = md.getY() - 200
+            # reset mouse cursor position
+            base.win.movePointer(0, 200, 200)
+            # alter model's yaw by an amount proportionate to deltaX
+            self.model.setH(self.model.getH() - 0.3 * deltaX)
+            # find the new camera pitch and clamp it to a reasonable range
+            self.cameraPitch = self.cameraPitch + 0.1 * deltaY
+            if (self.cameraPitch < -60): self.cameraPitch = -60
+            if (self.cameraPitch > 80): self.cameraPitch = 80
+            base.camera.setHpr(0, self.cameraPitch, 0)
+            # set the camera at around model's middle
+            # We should pivot around here instead of the view target which is noticebly higher
+            base.camera.setPos(0, 0, self.cameraTargetHeight / 2)
+            # back the camera out to its proper distance
+            base.camera.setY(base.camera, self.cameraDistance)
+            viewTarget = Point3(0, 0, self.cameraTargetHeight)
+            base.camera.lookAt(viewTarget)
         return Task.cont
 
 
@@ -303,6 +299,12 @@ class Keys(DirectObject):
         self.accept("s", self.setKey, ["right", 1])
         self.accept("s-up", self.setKey, ["right", 0])
 
+        self.accept("wheel_up", self.setKey, ["wheel-in", 1])
+        self.accept("wheel_down", self.setKey, ["wheel-out", 1])
+        self.accept("page_up", self.setKey, ["zoom-in", 1])
+        self.accept("page_up-up", self.setKey, ["zoom-in", 0])
+        self.accept("page_down", self.setKey, ["zoom-out", 1])
+        self.accept("page_down-up", self.setKey, ["zoom-out", 0])
 
     def setKey(self, key, value):
         if not self.isTyping:

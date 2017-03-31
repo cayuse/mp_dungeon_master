@@ -28,6 +28,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/goldenkeys.py" afterPath="$PROJECT_DIR$/client/goldenkeys.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/interesting-sites.txt" afterPath="$PROJECT_DIR$/client/interesting-sites.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/main.py" afterPath="$PROJECT_DIR$/client/main.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/models/torches.yaml" afterPath="$PROJECT_DIR$/client/models/torches.yaml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/torches.py" afterPath="$PROJECT_DIR$/client/torches.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/navmeshgen.py" afterPath="$PROJECT_DIR$/server/navmeshgen.py" />
     </list>
@@ -109,11 +110,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="client.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="client.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/client/client.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="554">
-              <caret line="61" column="38" lean-forward="false" selection-start-line="61" selection-start-column="38" selection-end-line="61" selection-end-column="38" />
+            <state relative-caret-position="244">
+              <caret line="198" column="40" lean-forward="false" selection-start-line="198" selection-start-column="40" selection-end-line="198" selection-end-column="40" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -124,14 +125,16 @@
       <file leaf-file-name="rralph.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../dungeon_master/rralph.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="113">
+            <state relative-caret-position="-2278">
               <caret line="129" column="0" lean-forward="false" selection-start-line="129" selection-start-column="0" selection-end-line="129" selection-end-column="0" />
-              <folding />
+              <folding>
+                <marker date="1490971641133" expanded="true" signature="16403:16507" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dungeonGraphGenerator.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="dungeonGraphGenerator.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/dungeonGraphGenerator.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-3995">
@@ -147,9 +150,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>loader</find>
-      <find>bam</find>
-      <find>roof</find>
       <find>partic</find>
       <find>base</find>
       <find>Light</find>
@@ -177,6 +177,9 @@
       <find>json</find>
       <find>graph</find>
       <find>shader</find>
+      <find>mouse</find>
+      <find>ralph</find>
+      <find>cameraTarget</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -195,9 +198,9 @@
         <option value="$PROJECT_DIR$/client/keys.py" />
         <option value="$PROJECT_DIR$/client/goldenkeys.py" />
         <option value="$PROJECT_DIR$/client/main.py" />
-        <option value="$PROJECT_DIR$/client/client.py" />
         <option value="$PROJECT_DIR$/client/dungeonGraphGenerator.py" />
         <option value="$PROJECT_DIR$/client/torches.py" />
+        <option value="$PROJECT_DIR$/client/client.py" />
       </list>
     </option>
   </component>
@@ -601,7 +604,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-840">
           <caret line="156" column="36" lean-forward="false" selection-start-line="156" selection-start-column="31" selection-end-line="156" selection-end-column="36" />
-          <folding />
+          <folding>
+            <marker date="1490971641133" expanded="true" signature="16403:16507" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -655,7 +660,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2312">
           <caret line="156" column="0" lean-forward="true" selection-start-line="156" selection-start-column="0" selection-end-line="156" selection-end-column="0" />
-          <folding />
+          <folding>
+            <marker date="1490971641133" expanded="true" signature="16403:16507" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -770,12 +777,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/client.py">
+    <entry file="file://$PROJECT_DIR$/client/goldenkeys.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="554">
-          <caret line="61" column="38" lean-forward="false" selection-start-line="61" selection-start-column="38" selection-end-line="61" selection-end-column="38" />
+        <state relative-caret-position="663">
+          <caret line="39" column="55" lean-forward="false" selection-start-line="39" selection-start-column="55" selection-end-line="39" selection-end-column="55" />
           <folding>
-            <element signature="e#0#26#0" expanded="true" />
+            <element signature="e#0#33#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/dungeonGraphGenerator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3995">
+          <caret line="17" column="53" lean-forward="false" selection-start-line="17" selection-start-column="53" selection-end-line="17" selection-end-column="53" />
+          <folding>
+            <element signature="e#67#85#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/torches.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="31" column="46" lean-forward="true" selection-start-line="31" selection-start-column="46" selection-end-line="31" selection-end-column="46" />
+          <folding>
+            <element signature="e#0#33#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -792,38 +819,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../dungeon_master/rralph.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="113">
+        <state relative-caret-position="-2278">
           <caret line="129" column="0" lean-forward="false" selection-start-line="129" selection-start-column="0" selection-end-line="129" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/goldenkeys.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="663">
-          <caret line="39" column="55" lean-forward="false" selection-start-line="39" selection-start-column="55" selection-end-line="39" selection-end-column="55" />
           <folding>
-            <element signature="e#0#33#0" expanded="true" />
+            <marker date="1490971641133" expanded="true" signature="16403:16507" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/torches.py">
+    <entry file="file://$PROJECT_DIR$/client/client.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="31" column="46" lean-forward="true" selection-start-line="31" selection-start-column="46" selection-end-line="31" selection-end-column="46" />
+        <state relative-caret-position="244">
+          <caret line="198" column="40" lean-forward="false" selection-start-line="198" selection-start-column="40" selection-end-line="198" selection-end-column="40" />
           <folding>
-            <element signature="e#0#33#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/dungeonGraphGenerator.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3995">
-          <caret line="17" column="53" lean-forward="false" selection-start-line="17" selection-start-column="53" selection-end-line="17" selection-end-column="53" />
-          <folding>
-            <element signature="e#67#85#0" expanded="true" />
+            <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>
