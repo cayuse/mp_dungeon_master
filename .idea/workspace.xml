@@ -9,6 +9,9 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/models/ralph.egg.pz" afterPath="$PROJECT_DIR$/client/models/ralph.egg.pz" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/models/ralph.jpg" afterPath="$PROJECT_DIR$/client/models/ralph.jpg" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/models/ralph_box.egg" afterPath="$PROJECT_DIR$/client/models/ralph_box.egg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/nav1.png" afterPath="$PROJECT_DIR$/client/nav1.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/nav2.png" afterPath="$PROJECT_DIR$/client/nav2.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/ramp_TM.png" afterPath="$PROJECT_DIR$/client/ramp_TM.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/terrains/ramp_HM.png" afterPath="$PROJECT_DIR$/client/terrains/ramp_HM.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/terrains/ramp_TM.png" afterPath="$PROJECT_DIR$/client/terrains/ramp_TM.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/terrains/roof.bam" afterPath="$PROJECT_DIR$/client/terrains/roof.bam" />
@@ -94,11 +97,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="torches.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="torches.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/torches.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="58" column="46" lean-forward="true" selection-start-line="58" selection-start-column="46" selection-end-line="58" selection-end-column="46" />
+            <state relative-caret-position="544">
+              <caret line="38" column="19" lean-forward="false" selection-start-line="38" selection-start-column="19" selection-end-line="38" selection-end-column="19" />
               <folding>
                 <element signature="e#0#33#0" expanded="true" />
               </folding>
@@ -106,11 +109,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="client.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="client.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/client/client.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="282">
-              <caret line="40" column="26" lean-forward="false" selection-start-line="40" selection-start-column="26" selection-end-line="40" selection-end-column="26" />
+            <state relative-caret-position="646">
+              <caret line="164" column="31" lean-forward="false" selection-start-line="164" selection-start-column="31" selection-end-line="164" selection-end-column="31" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -131,8 +134,8 @@
       <file leaf-file-name="dungeonGraphGenerator.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/dungeonGraphGenerator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="438">
-              <caret line="89" column="26" lean-forward="true" selection-start-line="89" selection-start-column="26" selection-end-line="89" selection-end-column="26" />
+            <state relative-caret-position="200">
+              <caret line="249" column="1" lean-forward="false" selection-start-line="249" selection-start-column="1" selection-end-line="249" selection-end-column="1" />
               <folding>
                 <element signature="e#67#85#0" expanded="true" />
               </folding>
@@ -171,9 +174,9 @@
       <find>ramp</find>
       <find>keys</find>
       <find>655</find>
+      <find>canvas</find>
       <find>nav</find>
       <find>shad</find>
-      <find>canvas</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -192,9 +195,9 @@
         <option value="$PROJECT_DIR$/client/keys.py" />
         <option value="$PROJECT_DIR$/client/goldenkeys.py" />
         <option value="$PROJECT_DIR$/client/main.py" />
-        <option value="$PROJECT_DIR$/client/client.py" />
         <option value="$PROJECT_DIR$/client/dungeonGraphGenerator.py" />
         <option value="$PROJECT_DIR$/client/torches.py" />
+        <option value="$PROJECT_DIR$/client/client.py" />
       </list>
     </option>
   </component>
@@ -757,16 +760,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/goldenkeys.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="663">
-          <caret line="39" column="55" lean-forward="false" selection-start-line="39" selection-start-column="55" selection-end-line="39" selection-end-column="55" />
-          <folding>
-            <element signature="e#0#33#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/MapObjects.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -795,20 +788,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/client.py">
+    <entry file="file://$PROJECT_DIR$/client/goldenkeys.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="40" column="26" lean-forward="false" selection-start-line="40" selection-start-column="26" selection-end-line="40" selection-end-column="26" />
+        <state relative-caret-position="663">
+          <caret line="39" column="55" lean-forward="false" selection-start-line="39" selection-start-column="55" selection-end-line="39" selection-end-column="55" />
           <folding>
-            <element signature="e#0#26#0" expanded="true" />
+            <element signature="e#0#33#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/dungeonGraphGenerator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="438">
-          <caret line="89" column="26" lean-forward="true" selection-start-line="89" selection-start-column="26" selection-end-line="89" selection-end-column="26" />
+        <state relative-caret-position="200">
+          <caret line="249" column="1" lean-forward="false" selection-start-line="249" selection-start-column="1" selection-end-line="249" selection-end-column="1" />
           <folding>
             <element signature="e#67#85#0" expanded="true" />
           </folding>
@@ -817,10 +810,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/client/torches.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="58" column="46" lean-forward="true" selection-start-line="58" selection-start-column="46" selection-end-line="58" selection-end-column="46" />
+        <state relative-caret-position="544">
+          <caret line="38" column="19" lean-forward="false" selection-start-line="38" selection-start-column="19" selection-end-line="38" selection-end-column="19" />
           <folding>
             <element signature="e#0#33#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/client.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="646">
+          <caret line="164" column="31" lean-forward="false" selection-start-line="164" selection-start-column="31" selection-end-line="164" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>

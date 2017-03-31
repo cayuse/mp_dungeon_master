@@ -6,48 +6,45 @@ import sys
 
 class Torches(DirectObject):
     def __init__(self):
-        torches = [(  42.5 ,  159.0  ),
-(  62.0 ,  123.0  ),
-(  91.0 ,  85.0  ),
-(  159.5 ,  106.0  ),
-(  78.5 ,  172.0  ),
-(  191.5 ,  229.5  ),
-(  85.0 ,  114.0  ),
-(  198.0 ,  82.0  ),
-(  225.0 ,  19.0  ),
-(  209.5 ,  123.0  ),
-(  126.0 ,  47.5  ),
-(  138.0 ,  162.5  ),
-(  180.5 ,  173.0  ),
-(  27.0 ,  37.0  ),
-(  171.0 ,  33.5  ),
-(  201.5 ,  202.0  ),
-(  34.0 ,  86.5  ),
-(  127.0 ,  226.5  ),
-(  29.0 ,  202.5  ),
-(  84.0 ,  40.0  ),
-(  83.5 ,  222.0  ),
-(  132.5 ,  81.5  ),
-(  55.5 ,  236.5  ),
-(  235.0 ,  74.5  ),
-(  15.0 ,  165.0  ),
-(  125.5 ,  127.0  ),
-(  235.5 ,  191.0  ),
-(  20.5 ,  131.0  ),
-(  139.5 ,  12.5  ),
-(  136.5 ,  189.0  ),
-(  74.0 ,  13.5  ),
-(  158.5 ,  218.5  ),
-(  228.5 ,  165.0  ),
-(  205.5 ,  167.0  ),
-(  168.5 ,  77.5  ),
-(  215.0 ,  239.5  )]
+        torches = [(  167.5 ,  126.5  ),
+(  213.5 ,  117.0  ),
+(  149.5 ,  201.0  ),
+(  55.5 ,  150.0  ),
+(  203.0 ,  169.5  ),
+(  119.5 ,  201.5  ),
+(  102.5 ,  79.5  ),
+(  23.5 ,  51.0  ),
+(  231.5 ,  21.5  ),
+(  188.0 ,  52.5  ),
+(  47.5 ,  226.5  ),
+(  74.0 ,  19.0  ),
+(  86.0 ,  237.5  ),
+(  34.0 ,  100.5  ),
+(  81.0 ,  120.0  ),
+(  216.5 ,  204.0  ),
+(  135.0 ,  114.5  ),
+(  88.5 ,  199.0  ),
+(  121.5 ,  151.0  ),
+(  141.5 ,  22.5  ),
+(  206.5 ,  230.0  ),
+(  147.0 ,  76.5  ),
+(  16.5 ,  230.5  ),
+(  148.5 ,  160.0  ),
+(  57.0 ,  183.0  ),
+(  29.5 ,  149.0  ),
+(  153.5 ,  236.5  ),
+(  219.0 ,  64.0  ),
+(  26.0 ,  180.5  ),
+(  236.5 ,  168.0  ),
+(  181.0 ,  19.0  )]
         tex = loader.loadTexture("models/rocks.jpg")
         for torch in torches:
+            x = torch[1]
+            y = 256-torch[0]
             self.torch = loader.loadModel("models/wall-torch")
             self.torch.setTexture(tex,1)
             self.torch.reparentTo(render)
-            self.torch.setPosHprScale(torch[0],torch[1],8,0,90,0,0.1,0.1,0.1)
+            self.torch.setPosHprScale(x,y,8,0,90,0,0.1,0.1,0.1)
             p = ParticleEffect()
             p.loadConfig("particles/fireish.ptf")
             p.start(parent=self.torch, renderParent=render)
@@ -55,7 +52,7 @@ class Torches(DirectObject):
             plight = PointLight('plight')
             plight.setColor(Vec4(255, 255, 255, 1))
             plnp = render.attachNewNode(plight)
-            plnp.setPos(Vec3(257-torch[1],257-torch[0], 9))
+            plnp.setPos(Vec3(x,y, 9))
             plight.setAttenuation((1, 0, 0.5))
             render.setLight(plnp)
             #plnp = lightpivot.attachNewNode(plight)

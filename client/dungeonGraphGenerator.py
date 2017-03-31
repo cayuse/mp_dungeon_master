@@ -73,8 +73,8 @@ for ww in widths:
     hh = getHeight(ww)
     # the next two lines of code will pick a random place on the map
     # they should guarantee that the selected location won't go outside the map, given the room to be placed
-    xx = np.random.randint(0, WORLD_WIDTH  - ww - BUF)
-    yy = np.random.randint(0, WORLD_HEIGHT - hh - BUF)
+    xx = np.random.randint(BUF, WORLD_WIDTH  - ww - BUF)
+    yy = np.random.randint(BUF, WORLD_HEIGHT - hh - BUF)
 
     #the following loop compares against all previous rooms and checks for collisions
     add = True
@@ -87,8 +87,8 @@ for ww in widths:
             add = False
     # if there were no collisions, go through the process of adding the room
     if add:
-        cx = xx + ww / 2.0
-        cy = yy + hh / 2.0
+        cx = xx + (ww / 2.0)
+        cy = yy + (hh / 2.0)
         print "( ",
         print cx,
         print ", ",
@@ -247,8 +247,8 @@ for edge in mst_dungeon.edges(data=True):
 #    for y in range(0, WORLD_HEIGHT ):  # step by fives
 #        canvas[x][y] = canvas[x][y] + np.random.randint(200) - 100
 
-canvas[255][0] = 65535
-canvas[255][255] = 65535
+#canvas[256][0] = 65535
+#canvas[255][255] = 65535
 
 # this gets used a bunch later
 norm = mpl.colors.Normalize(np.min(canvas), np.max(canvas))

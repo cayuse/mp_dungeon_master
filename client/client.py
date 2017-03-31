@@ -162,7 +162,7 @@ class Me(DirectObject):
         self.AnimControl.setPlayRate(0.05)
         self.model.setBlend(frameBlend=1)
         #start position
-        self.model.setPos(214.5,257-195.5,0)
+        self.model.setPos(19,75,0)
         # STORE TERRAIN SCALE FOR LATER USE#
         self.terrainScale = terrainClass.terrain.getRoot().getSz()
         base.camera.reparentTo(self.model)
