@@ -38,6 +38,7 @@ alight = AmbientLight('alight')
 alight.setColor(Vec4(0.1, 0.1, 0.1, 0.1))
 alnp = render.attachNewNode(alight)
 render.setLight(alnp)
+render.setShaderAuto()
 me.model.setShaderAuto()
 #me.model.setNormalMap("models/nskinrd-normal.jpg")
 
