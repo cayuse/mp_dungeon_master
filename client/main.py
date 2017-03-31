@@ -35,7 +35,7 @@ taskMgr.add(w.UpdateWorld,"keep the world up to date",extraArgs = [me,worldClien
 #test code for lighting, normal mapping, etc...#
 #ambient light
 alight = AmbientLight('alight')
-alight.setColor(Vec4(0.7, 0.7, 0.7, 0.1))
+alight.setColor(Vec4(0.1, 0.1, 0.1, 0.1))
 alnp = render.attachNewNode(alight)
 render.setLight(alnp)
 me.model.setShaderAuto()

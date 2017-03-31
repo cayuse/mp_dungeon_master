@@ -17,7 +17,7 @@ except ImportError:
 WORLD_HEIGHT = 257  # does not have to be square
 WORLD_WIDTH =  257  # both should be 2 ** x + 1 (x > 0)
 BUF = 4  # minimum number of pixels between any two rooms we place
-HIGH = 30000
+HIGH = 65535
 LOW = 0
 
 # we are still using globals.. get over it.. we are  fiddling
