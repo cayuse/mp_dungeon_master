@@ -250,6 +250,42 @@ for edge in mst_dungeon.edges(data=True):
 #canvas[256][0] = 65535
 #canvas[255][255] = 65535
 
+torches = []
+for node in dungeon_graph.nodes(data=True):
+    print node
+    x = int(node[1]['cx'])
+    y = int(node[1]['y'])
+    #check pixel above north
+    if canvas[x][y-1] == HIGH:
+        direction = 0 # north
+    else: #east
+        x = int(node[1]['x']) + int(node[1]['w'])
+        y = int(node[1]['cy'])
+        #check pixel right of east
+        if canvas[x+1][5] == HIGH:
+            direction = 1 #east
+        else: #south
+            x = int(node[1]['cx'])
+            y = int(node[1]['cy']) + int(node[1]['h'])
+            #check below south
+            if canvas[x][y+1]:
+                direction = 2 #south
+            else:
+                x = int(node[1]['x'])
+                y = int(node[1]['cy'])
+                #check left of west
+                if canvas[x-1][y] == HIGH:
+                    direction = 3
+                else: #corner
+                    x = int(node[1]['x'])
+                    y = int(node[1]['y'])
+                    direction = 4
+    torches.append((x,y,direction))
+output = dump(torches, Dumper=Dumper)
+stream = file('models/torches.yaml', 'w')
+dump(torches, stream)
+stream.close()
+
 # this gets used a bunch later
 norm = mpl.colors.Normalize(np.min(canvas), np.max(canvas))
 
