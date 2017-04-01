@@ -302,10 +302,10 @@ f.close()
 #f.close()
 cmap = plt.cm.RdGy_r
 image = cmap(norm(canvas))
-plt.imsave('nav1.png', image)
-test = np.flipud(canvas)
-image = cmap(norm(test))
-plt.imsave('nav2.png', image)
+plt.imsave('../server/terrains/nav1.png', image)
+#test = np.flipud(canvas)
+#image = cmap(norm(test))
+#plt.imsave('nav2.png', image)
 
 # if all is right, we should have a nice 2d array, and we should be able to create a png out of it.
 #f = open('ramp_HM.png', 'wb')  # binary mode is important
@@ -314,7 +314,7 @@ plt.imsave('nav2.png', image)
 #w.write(f, canvas.tolist())
 #f.close()
 
-        
+'''     
 cmap = plt.cm.gist_earth
 image = cmap(norm(canvas))
 plt.imsave('terrains/ramp_TM.png', image)
@@ -322,5 +322,5 @@ plt.imsave('terrains/ramp_TM.png', image)
 swapped = np.flipud(canvas)
 image = cmap(norm(swapped))
 plt.imsave('ramp_TM.png', image)
-
+''''''
 ## next we are going to dump a Yaml description of the dungeon

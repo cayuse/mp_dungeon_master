@@ -8,6 +8,7 @@ from direct.actor.Actor import Actor
 from client import *
 from torches import *
 from goldenkeys import *
+from network import *
 from MapObjects import *
 import sys
 
