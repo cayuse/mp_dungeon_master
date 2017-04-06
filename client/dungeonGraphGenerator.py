@@ -14,11 +14,13 @@ except ImportError:
     from yaml import Loader, Dumper
 
 
-WORLD_HEIGHT = 257  # does not have to be square
-WORLD_WIDTH =  257  # both should be 2 ** x + 1 (x > 0)
+WORLD_HEIGHT = 257  # does have to be square
+WORLD_WIDTH = WORLD_HEIGHT  # should be 2 ** x + 1 (x > 0)
 BUF = 4  # minimum number of pixels between any two rooms we place
 HIGH = 65535
 LOW = 0
+
+np.random.seed(12345)
 
 # we are still using globals.. get over it.. we are  fiddling
 canvas = np.zeros((WORLD_WIDTH,WORLD_HEIGHT), dtype=np.float) # Canvas of pixels hopefully all "black"
@@ -130,8 +132,8 @@ for edge in a.edges_iter():
     #mynode = dungeon_graph.node[node].nlist()
     #print mynode
     None
-#print "leaf nodes"
-#print leaf_nodes
+print "leaf nodes"
+print leaf_nodes
 #print "end leaf nodes"
 
 """
@@ -322,5 +324,5 @@ plt.imsave('terrains/ramp_TM.png', image)
 swapped = np.flipud(canvas)
 image = cmap(norm(swapped))
 plt.imsave('ramp_TM.png', image)
-''''''
+'''
 ## next we are going to dump a Yaml description of the dungeon

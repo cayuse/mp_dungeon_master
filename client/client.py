@@ -7,6 +7,11 @@ from direct.task.Task import Task
 from direct.gui.DirectGui import *
 import sys
 
+from yaml import load
+try:
+    from yaml import CLoader as Loader
+except ImportError:
+    from yaml import Loader
 
 class Client(DirectObject):
     def __init__(self, p, i):
