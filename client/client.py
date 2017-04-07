@@ -5,6 +5,9 @@ from direct.distributed.PyDatagramIterator import PyDatagramIterator
 from direct.actor.Actor import Actor
 from direct.task.Task import Task
 from direct.gui.DirectGui import *
+from direct.interval import ProjectileInterval
+base.enableParticles()
+from direct.particles.ParticleEffect import ParticleEffect
 import sys
 
 from yaml import load
@@ -97,7 +100,9 @@ class Me(DirectObject):
         self.AnimControl.setPlayRate(0.05)
         self.model.setBlend(frameBlend=1)
         #start position
-        self.model.setPos(119,179,0)
+        stream = file('models/start.yaml', 'r')
+        start = load(stream)
+        self.model.setPos(start)
         # STORE TERRAIN SCALE FOR LATER USE#
         self.terrainScale = terrainClass.terrain.getRoot().getSz()
         base.camera.reparentTo(self.model)
@@ -132,6 +137,10 @@ class Me(DirectObject):
             self.model.setY(self.model, -(self.elapsed * speed))
         if (keyClass.keyMap["back"] != 0):
             self.model.setY(self.model, (self.elapsed * speed))
+        #  FIRE
+        if (keyClass.keyMap["fire1"] !=0):
+            self.fireFire()
+
 
         if (keyClass.keyMap["forward"] != 0) or (keyClass.keyMap["left"] != 0) or (keyClass.keyMap["right"] != 0):
             if self.isMoving is False:
@@ -171,15 +180,28 @@ class Me(DirectObject):
             base.camera.setY(base.camera, self.cameraDistance)
             viewTarget = Point3(0, 0, self.cameraTargetHeight)
             base.camera.lookAt(viewTarget)
+
         return Task.cont
 
-
-
+    def fireFire(self, terrainClass):
+        self.emptyFire = NodePath("EmptyFire")
+        self.emptyFire.reparentTo(render)
+        startPos = Vec3(self.model.getX(), self.model.getZ(), 2)
+        self.emptyFire.setPos(startPos)
+        p = ParticleEffect()
+        p.loadConfig("particles/fireball.ptf")
+        p.start(parent=self.emptyFire, renderParent=render)
+        # setup the projectile interval
+        self.trajectory = ProjectileInterval(self.emptyFire,
+                                             startPos=startPos,
+                                             endPos=Vec3(0,0,2), duration=3)
+        self.trajectory.loop()
+        return Task.count
 
 class Keys(DirectObject):
     def __init__(self):
         self.isTyping = False
-        self.keyMap = {"left": 0, "right": 0, "forward": 0, "back": 0, "cam": 0, "right": 0, "autoRun": 0}
+        self.keyMap = {"left": 0, "right": 0, "forward": 0, "back": 0, "cam": 0, "right": 0, "autoRun": 0, "fire1": 0}
         #Quits game
         self.accept("escape", sys.exit)
 
@@ -201,6 +223,8 @@ class Keys(DirectObject):
         self.accept("s", self.setKey, ["right", 1])
         self.accept("s-up", self.setKey, ["right", 0])
 
+        self.accept("mouse1",  self.setKey, ["fire1", 1])
+        self.accept("mouse1-up", self.setKey,["fire1", 0])
         self.accept("wheel_up", self.setKey, ["wheel-in", 1])
         self.accept("wheel_down", self.setKey, ["wheel-out", 1])
         self.accept("page_up", self.setKey, ["zoom-in", 1])
@@ -299,3 +323,4 @@ class chatRegulator(DirectObject):
                                        mayChange=1)
         self.txt[index].reparentTo(base.a2dBottomLeft)
         self.txt[index].setPos(.05, .15 + .05 * index)
+

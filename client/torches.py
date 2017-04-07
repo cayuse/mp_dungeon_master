@@ -20,7 +20,7 @@ class Torches(DirectObject):
             self.torch = loader.loadModel("models/wall-torch")
             self.torch.setTexture(tex,1)
             self.torch.reparentTo(render)
-            self.torch.setPosHprScale(x,y,7,0,90,0,0.1,0.1,0.1)
+            self.torch.setPosHprScale(x, y, 7, 0, 90, 0, 0.1, 0.1, 0.1)
             p = ParticleEffect()
             p.loadConfig("particles/fireish.ptf")
             p.start(parent=self.torch, renderParent=render)

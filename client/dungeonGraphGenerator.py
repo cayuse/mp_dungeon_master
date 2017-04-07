@@ -12,6 +12,7 @@ try:
     from yaml import CLoader as Loader, CDumper as Dumper
 except ImportError:
     from yaml import Loader, Dumper
+from IPython import embed
 
 
 WORLD_HEIGHT = 257  # does have to be square
@@ -91,6 +92,8 @@ for ww in widths:
     if add:
         cx = xx + (ww / 2.0)
         cy = yy + (hh / 2.0)
+        icy = WORLD_HEIGHT - cy
+        iy  = WORLD_HEIGHT - yy
         print "( ",
         print cx,
         print ", ",
@@ -98,7 +101,7 @@ for ww in widths:
         print " ),"
         zz = np.random.randint(5000) + 20000
         zz = LOW
-        dungeon_graph.add_node(a,x = xx, y = yy, z = zz, w = ww, h = hh, cx = cx, cy = cy)
+        dungeon_graph.add_node(a,x = xx, y = yy, z = zz, w = ww, h = hh, cx = cx, cy = cy, iy = iy, icy = icy)
         # next add an edge to all existing rooms
         for let in range(0, a-1):
             distance = dist([cx,cy,zz],[dungeon_graph.node[let]['cx'], dungeon_graph.node[let]['cy'], dungeon_graph.node[let]['z']])
@@ -134,6 +137,23 @@ for edge in a.edges_iter():
     None
 print "leaf nodes"
 print leaf_nodes
+keys = []
+#embed()
+keyKinds = ("e", "w", "f")
+for i in range(3):
+    x = int(mst_dungeon.node[leaf_nodes[i]]['cx'])
+    y = int(mst_dungeon.node[leaf_nodes[i]]['icy'])
+    keys.append( (x, y, keyKinds[i]) )
+output = dump(keys, Dumper=Dumper)
+stream = file('models/keys.yaml', 'w')
+dump(keys, stream)
+stream.close()
+
+startLoc = ( int(mst_dungeon.node[leaf_nodes[4]]['cx']), int(mst_dungeon.node[leaf_nodes[4]]['icy']), 0)
+stream = file('models/start.yaml', 'w')
+dump(startLoc, stream)
+stream.close()
+
 #print "end leaf nodes"
 
 """

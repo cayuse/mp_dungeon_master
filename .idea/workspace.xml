@@ -75,8 +75,8 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="697">
-              <caret line="41" column="1" lean-forward="false" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="22" />
+            <state relative-caret-position="290">
+              <caret line="31" column="45" lean-forward="false" selection-start-line="31" selection-start-column="45" selection-end-line="31" selection-end-column="45" />
               <folding>
                 <element signature="e#0#36#0" expanded="true" />
               </folding>
@@ -87,8 +87,8 @@
       <file leaf-file-name="goldenkeys.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/goldenkeys.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="663">
-              <caret line="39" column="55" lean-forward="false" selection-start-line="39" selection-start-column="55" selection-end-line="39" selection-end-column="55" />
+            <state relative-caret-position="459">
+              <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
               <folding>
                 <element signature="e#0#33#0" expanded="true" />
               </folding>
@@ -99,8 +99,8 @@
       <file leaf-file-name="torches.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/torches.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="4" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="9" selection-end-column="27" />
+            <state relative-caret-position="34">
+              <caret line="2" column="19" lean-forward="false" selection-start-line="2" selection-start-column="11" selection-end-line="2" selection-end-column="19" />
               <folding>
                 <element signature="e#0#33#0" expanded="true" />
               </folding>
@@ -108,11 +108,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="client.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="client.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/client/client.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="13" column="27" lean-forward="false" selection-start-line="13" selection-start-column="27" selection-end-line="13" selection-end-column="27" />
+            <state relative-caret-position="537">
+              <caret line="198" column="25" lean-forward="false" selection-start-line="198" selection-start-column="25" selection-end-line="198" selection-end-column="25" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -120,23 +120,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="rralph.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../dungeon_master/rralph.py">
+      <file leaf-file-name="fireball.ptf" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/particles/fireball.ptf">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2278">
-              <caret line="129" column="0" lean-forward="false" selection-start-line="129" selection-start-column="0" selection-end-line="129" selection-end-column="0" />
-              <folding>
-                <marker date="1490971641133" expanded="true" signature="16403:16507" ph="..." />
-              </folding>
+            <state relative-caret-position="493">
+              <caret line="29" column="42" lean-forward="false" selection-start-line="29" selection-start-column="42" selection-end-line="29" selection-end-column="42" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dungeonGraphGenerator.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="rralph.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../dungeon_master/rralph.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="476">
+              <caret line="28" column="0" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dungeonGraphGenerator.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/dungeonGraphGenerator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="22" column="20" lean-forward="false" selection-start-line="22" selection-start-column="20" selection-end-line="22" selection-end-column="20" />
+            <state relative-caret-position="1159">
+              <caret line="147" column="38" lean-forward="false" selection-start-line="147" selection-start-column="38" selection-end-line="147" selection-end-column="38" />
               <folding>
                 <element signature="e#67#85#0" expanded="true" />
               </folding>
@@ -148,19 +156,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>partic</find>
-      <find>base</find>
-      <find>Light</find>
-      <find>light</find>
-      <find>nav1</find>
-      <find>HM</find>
-      <find>parent</find>
-      <find>Me</find>
-      <find>def Me</find>
-      <find>Me(</find>
-      <find>Task</find>
-      <find>torch</find>
-      <find>update</find>
       <find>material</find>
       <find>print</find>
       <find>disable</find>
@@ -171,13 +166,26 @@
       <find>canvas</find>
       <find>nav</find>
       <find>shad</find>
-      <find>start</find>
       <find>json</find>
       <find>graph</find>
       <find>mouse</find>
-      <find>ralph</find>
       <find>cameraTarget</find>
+      <find>nodes</find>
+      <find>output</find>
+      <find>start</find>
+      <find>empty</find>
+      <find>left</find>
+      <find>forward</find>
+      <find>fireFire</find>
+      <find>setText</find>
       <find>shader</find>
+      <find>node</find>
+      <find>ralph</find>
+      <find>fire</find>
+      <find>197</find>
+      <find>particle</find>
+      <find>move</find>
+      <find>task</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -190,15 +198,16 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/client/particles/fireish.ptf" />
-        <option value="$PROJECT_DIR$/../dungeon_master/rralph.py" />
         <option value="$PROJECT_DIR$/../dungeon_master/dungeonGraphGenerator.py" />
         <option value="$PROJECT_DIR$/client/interesting-sites.txt" />
         <option value="$PROJECT_DIR$/client/keys.py" />
-        <option value="$PROJECT_DIR$/client/goldenkeys.py" />
-        <option value="$PROJECT_DIR$/client/main.py" />
-        <option value="$PROJECT_DIR$/client/torches.py" />
-        <option value="$PROJECT_DIR$/client/client.py" />
         <option value="$PROJECT_DIR$/client/dungeonGraphGenerator.py" />
+        <option value="$PROJECT_DIR$/client/goldenkeys.py" />
+        <option value="$PROJECT_DIR$/client/torches.py" />
+        <option value="$PROJECT_DIR$/../dungeon_master/rralph.py" />
+        <option value="$PROJECT_DIR$/client/particles/fireball.ptf" />
+        <option value="$PROJECT_DIR$/client/main.py" />
+        <option value="$PROJECT_DIR$/client/client.py" />
       </list>
     </option>
   </component>
@@ -269,6 +278,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="client" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mp_dungoen_master" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mp_dungoen_master" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="client" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="particles" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -459,8 +486,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1696" height="1036" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1696" height="1036" extended-state="7" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20595238" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -602,9 +628,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-840">
           <caret line="156" column="36" lean-forward="false" selection-start-line="156" selection-start-column="31" selection-end-line="156" selection-end-column="36" />
-          <folding>
-            <marker date="1490971641133" expanded="true" signature="16403:16507" ph="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -658,9 +682,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2312">
           <caret line="156" column="0" lean-forward="true" selection-start-line="156" selection-start-column="0" selection-end-line="156" selection-end-column="0" />
-          <folding>
-            <marker date="1490971641133" expanded="true" signature="16403:16507" ph="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -733,14 +755,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="4" lean-forward="false" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/interesting-sites.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -765,6 +779,40 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/server/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="4" lean-forward="false" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/dungeonGraphGenerator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1159">
+          <caret line="147" column="38" lean-forward="false" selection-start-line="147" selection-start-column="38" selection-end-line="147" selection-end-column="38" />
+          <folding>
+            <element signature="e#67#85#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../dungeon_master/rralph.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="28" column="0" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/particles/fireball.ptf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="29" column="42" lean-forward="false" selection-start-line="29" selection-start-column="42" selection-end-line="29" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/client/MapObjects.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -777,60 +825,40 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/client/goldenkeys.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="663">
-          <caret line="39" column="55" lean-forward="false" selection-start-line="39" selection-start-column="55" selection-end-line="39" selection-end-column="55" />
+        <state relative-caret-position="459">
+          <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
           <folding>
             <element signature="e#0#33#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../dungeon_master/rralph.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2278">
-          <caret line="129" column="0" lean-forward="false" selection-start-line="129" selection-start-column="0" selection-end-line="129" selection-end-column="0" />
-          <folding>
-            <marker date="1490971641133" expanded="true" signature="16403:16507" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="697">
-          <caret line="41" column="1" lean-forward="false" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#36#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/torches.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="4" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="9" selection-end-column="27" />
+        <state relative-caret-position="34">
+          <caret line="2" column="19" lean-forward="false" selection-start-line="2" selection-start-column="11" selection-end-line="2" selection-end-column="19" />
           <folding>
             <element signature="e#0#33#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/client.py">
+    <entry file="file://$PROJECT_DIR$/client/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="27" lean-forward="false" selection-start-line="13" selection-start-column="27" selection-end-line="13" selection-end-column="27" />
+        <state relative-caret-position="290">
+          <caret line="31" column="45" lean-forward="false" selection-start-line="31" selection-start-column="45" selection-end-line="31" selection-end-column="45" />
           <folding>
-            <element signature="e#0#26#0" expanded="true" />
+            <element signature="e#0#36#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/dungeonGraphGenerator.py">
+    <entry file="file://$PROJECT_DIR$/client/client.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="20" lean-forward="false" selection-start-line="22" selection-start-column="20" selection-end-line="22" selection-end-column="20" />
+        <state relative-caret-position="537">
+          <caret line="198" column="25" lean-forward="false" selection-start-line="198" selection-start-column="25" selection-end-line="198" selection-end-column="25" />
           <folding>
-            <element signature="e#67#85#0" expanded="true" />
+            <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>

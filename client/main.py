@@ -29,6 +29,7 @@ chatReg = chatRegulator(worldClient,keys)
 
 taskMgr.add(N.updatePlayers,"keep every player where they are supposed to be",extraArgs = [me])
 taskMgr.add(me.move,"move our penguin", extraArgs = [keys,Terrain])
+taskMgr.add(me.fireFire, extraArgs=[Terrain])
 taskMgr.add(worldClient.tskReaderPolling,"Poll the connection reader",extraArgs = [me,N,chatReg])
 taskMgr.add(w.UpdateWorld,"keep the world up to date",extraArgs = [me,worldClient])
 
@@ -36,7 +37,7 @@ taskMgr.add(w.UpdateWorld,"keep the world up to date",extraArgs = [me,worldClien
 #test code for lighting, normal mapping, etc...#
 #ambient light
 alight = AmbientLight('alight')
-alight.setColor(Vec4(0.1, 0.1, 0.1, 0.1))
+alight.setColor(Vec4(0.5, 0.5, 0.5, 0.1))
 alnp = render.attachNewNode(alight)
 render.setLight(alnp)
 render.setShaderAuto()
