@@ -86,18 +86,27 @@ class Terrain(GeoMipTerrain):
 class Me(DirectObject):
     def __init__(self, terrainClass):
 
+        self.model = Actor("models/pc/female_nude", {"attack1": "models/pc/female_attack1",
+                                                     "attack2": "models/pc/female_attack2",
+                                                     "walk": "models/pc/female_run",
+                                                     "die": "models/pc/female_die",
+                                                     "strafe": "models/pc/female_strafe",
+                                                     "hit": "models/pc/female_hit",
+                                                     "idle": "models/pc/female_idle"})
+        '''
         self.model = Actor("models/ralph",
                            {"run": "models/ralph-run",
                             "walk": "models/ralph-walk"})
+        '''
         self.actorHead = self.model.exposeJoint(None, 'modelRoot', 'Joint8')
         # self.model.setScale(4)
         self.playernum = None
         self.timeSinceLastUpdate = 0
         self.model.reparentTo(render)
-        self.model.setScale(0.5)
+        self.model.setScale(0.025)
         self.isMoving = False
         self.AnimControl = self.model.getAnimControl('walk')
-        self.AnimControl.setPlayRate(0.05)
+        #self.AnimControl.setPlayRate(0.05)
         self.model.setBlend(frameBlend=1)
         #start position
         stream = file('models/start.yaml', 'r')
@@ -106,14 +115,14 @@ class Me(DirectObject):
         # STORE TERRAIN SCALE FOR LATER USE#
         self.terrainScale = terrainClass.terrain.getRoot().getSz()
         base.camera.reparentTo(self.model)
-        self.cameraTargetHeight = 3.0
+        self.cameraTargetHeight = 30.0
         # How far should the camera be from Model
-        self.cameraDistance = 30
+        self.cameraDistance = 300
         # Initialize the pitch of the camera
         self.cameraPitch = 10
 
         self.camDummy = self.model.attachNewNode("camDummy")
-        self.camDummy.setZ(5)
+        self.camDummy.setZ(10)
         base.disableMouse()
         props = WindowProperties()
         props.setCursorHidden(True)

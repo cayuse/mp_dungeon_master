@@ -2,13 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c83e7103-5769-413c-a7bf-18911bc6cd86" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/models/fire-key.png" afterPath="$PROJECT_DIR$/client/models/fire-key.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/models/golden-key.egg" afterPath="$PROJECT_DIR$/client/models/golden-key.egg" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/models/golden-key.tif" afterPath="$PROJECT_DIR$/client/models/golden-key.tif" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/models/ice-key.png" afterPath="$PROJECT_DIR$/client/models/ice-key.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/models/ralph-run.egg.pz" afterPath="$PROJECT_DIR$/client/models/ralph-run.egg.pz" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/models/ralph-walk.egg.pz" afterPath="$PROJECT_DIR$/client/models/ralph-walk.egg.pz" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/models/ralph.egg.pz" afterPath="$PROJECT_DIR$/client/models/ralph.egg.pz" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/models/ralph.jpg" afterPath="$PROJECT_DIR$/client/models/ralph.jpg" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/models/ralph_box.egg" afterPath="$PROJECT_DIR$/client/models/ralph_box.egg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/particles/fire-1.png" afterPath="$PROJECT_DIR$/client/particles/fire-1.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/ramp_TM.png" afterPath="$PROJECT_DIR$/client/ramp_TM.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/terrains/ramp_HM.png" afterPath="$PROJECT_DIR$/client/terrains/ramp_HM.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/terrains/ramp_TM.png" afterPath="$PROJECT_DIR$/client/terrains/ramp_TM.png" />
@@ -26,7 +29,10 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/goldenkeys.py" afterPath="$PROJECT_DIR$/client/goldenkeys.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/interesting-sites.txt" afterPath="$PROJECT_DIR$/client/interesting-sites.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/main.py" afterPath="$PROJECT_DIR$/client/main.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/models/keys.yaml" afterPath="$PROJECT_DIR$/client/models/keys.yaml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/models/start.yaml" afterPath="$PROJECT_DIR$/client/models/start.yaml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/models/torches.yaml" afterPath="$PROJECT_DIR$/client/models/torches.yaml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/particles/fireball.ptf" afterPath="$PROJECT_DIR$/client/particles/fireball.ptf" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/torches.py" afterPath="$PROJECT_DIR$/client/torches.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/navmeshgen.py" afterPath="$PROJECT_DIR$/server/navmeshgen.py" />
     </list>
@@ -50,16 +56,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Server.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/Server.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="MapObjects.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/MapObjects.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -75,10 +71,22 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="290">
-              <caret line="31" column="45" lean-forward="false" selection-start-line="31" selection-start-column="45" selection-end-line="31" selection-end-column="45" />
+            <state relative-caret-position="394">
+              <caret line="38" column="24" lean-forward="true" selection-start-line="38" selection-start-column="24" selection-end-line="38" selection-end-column="24" />
               <folding>
                 <element signature="e#0#36#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="network.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/network.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="44">
+              <caret line="118" column="58" lean-forward="true" selection-start-line="118" selection-start-column="58" selection-end-line="118" selection-end-column="58" />
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -111,8 +119,8 @@
       <file leaf-file-name="client.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/client/client.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="537">
-              <caret line="198" column="25" lean-forward="false" selection-start-line="198" selection-start-column="25" selection-end-line="198" selection-end-column="25" />
+            <state relative-caret-position="119">
+              <caret line="91" column="27" lean-forward="false" selection-start-line="91" selection-start-column="27" selection-end-line="91" selection-end-column="27" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -140,26 +148,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dungeonGraphGenerator.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/dungeonGraphGenerator.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1159">
-              <caret line="147" column="38" lean-forward="false" selection-start-line="147" selection-start-column="38" selection-end-line="147" selection-end-column="38" />
-              <folding>
-                <element signature="e#67#85#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>material</find>
-      <find>print</find>
-      <find>disable</find>
-      <find>dist</find>
       <find>ramp</find>
       <find>keys</find>
       <find>655</find>
@@ -171,7 +163,6 @@
       <find>mouse</find>
       <find>cameraTarget</find>
       <find>nodes</find>
-      <find>output</find>
       <find>start</find>
       <find>empty</find>
       <find>left</find>
@@ -181,11 +172,16 @@
       <find>shader</find>
       <find>node</find>
       <find>ralph</find>
-      <find>fire</find>
       <find>197</find>
       <find>particle</find>
-      <find>move</find>
       <find>task</find>
+      <find>move</find>
+      <find>setpos</find>
+      <find>actor.setSca</find>
+      <find>model</find>
+      <find>actorHead</find>
+      <find>output</find>
+      <find>fire</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -207,6 +203,7 @@
         <option value="$PROJECT_DIR$/../dungeon_master/rralph.py" />
         <option value="$PROJECT_DIR$/client/particles/fireball.ptf" />
         <option value="$PROJECT_DIR$/client/main.py" />
+        <option value="$PROJECT_DIR$/client/network.py" />
         <option value="$PROJECT_DIR$/client/client.py" />
       </list>
     </option>
@@ -296,6 +293,46 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="particles" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mp_dungoen_master" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mp_dungoen_master" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="client" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="models" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mp_dungoen_master" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mp_dungoen_master" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="client" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="models" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pc" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -486,7 +523,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1696" height="1036" extended-state="7" />
+    <frame x="-8" y="-8" width="1696" height="1036" extended-state="6" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20595238" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -787,6 +824,56 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/client/MapObjects.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#53#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/torches.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="19" lean-forward="false" selection-start-line="2" selection-start-column="11" selection-end-line="2" selection-end-column="19" />
+          <folding>
+            <element signature="e#0#33#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/goldenkeys.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#33#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="394">
+          <caret line="38" column="24" lean-forward="true" selection-start-line="38" selection-start-column="24" selection-end-line="38" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#36#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/network.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="118" column="58" lean-forward="true" selection-start-line="118" selection-start-column="58" selection-end-line="118" selection-end-column="58" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/client/dungeonGraphGenerator.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1159">
@@ -813,50 +900,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/MapObjects.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#53#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/goldenkeys.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#33#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/torches.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="19" lean-forward="false" selection-start-line="2" selection-start-column="11" selection-end-line="2" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#33#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="31" column="45" lean-forward="false" selection-start-line="31" selection-start-column="45" selection-end-line="31" selection-end-column="45" />
-          <folding>
-            <element signature="e#0#36#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/client.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="537">
-          <caret line="198" column="25" lean-forward="false" selection-start-line="198" selection-start-column="25" selection-end-line="198" selection-end-column="25" />
+        <state relative-caret-position="119">
+          <caret line="91" column="27" lean-forward="false" selection-start-line="91" selection-start-column="27" selection-end-line="91" selection-end-column="27" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
