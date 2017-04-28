@@ -32,6 +32,13 @@ for x in range(0,WORLD_WIDTH):
         canvas[x][y] = HIGH
         ai_canvas[x][y] = 65535
 # here we make a certain number of room "widths" (second arg) with a poisson distribution around the first arg
+
+# if all is right, we should have a nice 2d array, and we should be able to create a png out of it.
+f = open('terrains/blankHM.png', 'wb')      # binary mode is important
+w = png.Writer(WORLD_HEIGHT, WORLD_WIDTH, bitdepth=16, greyscale=True)
+w.write(f, canvas)
+f.close()
+
 widths = np.random.poisson(25, 400)
 
 # we have considered a special room that acts as a 'front door' but haven't implemented it
