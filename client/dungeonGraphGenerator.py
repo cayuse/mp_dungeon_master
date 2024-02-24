@@ -101,11 +101,11 @@ for ww in widths:
         cy = yy + (hh / 2.0)
         icy = WORLD_HEIGHT - cy
         iy  = WORLD_HEIGHT - yy
-        print "( ",
-        print cx,
-        print ", ",
-        print cy,
-        print " ),"
+        print(cx)
+        print(", ")
+        print("( ")
+        print(cy)
+        print(" ),")
         zz = np.random.randint(5000) + 20000
         zz = LOW
         dungeon_graph.add_node(a,x = xx, y = yy, z = zz, w = ww, h = hh, cx = cx, cy = cy, iy = iy, icy = icy)
@@ -142,8 +142,8 @@ for edge in a.edges_iter():
     #mynode = dungeon_graph.node[node].nlist()
     #print mynode
     None
-print "leaf nodes"
-print leaf_nodes
+print("leaf nodes")
+print(leaf_nodes)
 keys = []
 #embed()
 keyKinds = ("e", "w", "f")
@@ -281,7 +281,7 @@ for edge in mst_dungeon.edges(data=True):
 
 torches = []
 for node in dungeon_graph.nodes(data=True):
-    print node
+    print(node)
     x = int(node[1]['cx'])
     y = int(node[1]['y'])
     #check pixel above north

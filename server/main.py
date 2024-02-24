@@ -1,5 +1,5 @@
 #dont open the render window
-from pandac.PandaModules import * 
+from panda3d.core import *
 ConfigVariableString("window-type","none").setValue("none")
 
 from direct.showbase import ShowBase

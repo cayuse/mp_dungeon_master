@@ -27,7 +27,7 @@ class Client(DirectObject):
         if self.Connection:
             self.cReader.addConnection(self.Connection)  # receive messages from server
         else:
-            print 'connection failed'
+            print('connection failed')
 
     def tskReaderPolling(self, m, playerRegulator,
                          chatClass):  # this function checks to see if there is any data from the server
@@ -140,7 +140,7 @@ class Me(DirectObject):
         # base.camera.lookAt(self.actorHead)
         if (keyClass.keyMap["left"] != 0):
             self.model.setX(self.model, (self.elapsed * speed))
-            print str(self.model.getX()), str(self.model.getY()), str(self.model.getZ())
+            print(str(self.model.getX()), str(self.model.getY()), str(self.model.getZ()))
         if (keyClass.keyMap["right"] != 0):
             self.model.setX(self.model, -(self.elapsed * speed))
         if (keyClass.keyMap["forward"] != 0):
@@ -324,8 +324,8 @@ class chatRegulator(DirectObject):
 
     def getWidgetTransformsF(self):
         for child in aspect2d.getChildren():
-            print child, "  position = ", child.getPos()
-            print child, "  scale = ", child.getScale()
+            print(child, "  position = ", child.getPos())
+            print(child, "  scale = ", child.getScale())
 
     def text(self, msg, position, index):
         self.txt[index].destroy()
