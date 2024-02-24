@@ -6,12 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="c83e7103-5769-413c-a7bf-18911bc6cd86" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/MapObjects.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/MapObjects.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/dungeonGraphGenerator.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/dungeonGraphGenerator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/goldenkeys.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/goldenkeys.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/network.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/network.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/torches.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/torches.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/Server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/Server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/client/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

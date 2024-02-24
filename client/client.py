@@ -110,9 +110,10 @@ class Me(DirectObject):
         #self.AnimControl.setPlayRate(0.05)
         self.model.setBlend(frameBlend=1)
         #start position
-        stream = file('models/start.yaml', 'r')
-        start = load(stream)
-        self.model.setPos(start)
+        #stream = file('models/start.yaml', 'r')
+        #start = load(stream)
+        #start = load('models/start.yaml', Loader=Loader)
+        self.model.setPos(122, 175, 0)
         # STORE TERRAIN SCALE FOR LATER USE#
         self.terrainScale = terrainClass.terrain.getRoot().getSz()
         base.camera.reparentTo(self.model)

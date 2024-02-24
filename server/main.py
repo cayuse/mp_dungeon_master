@@ -4,7 +4,6 @@ ConfigVariableString("window-type","none").setValue("none")
 
 from direct.showbase import ShowBase
 from direct.task.Task import Task
-from pandac.PandaModules import *
 from direct.distributed.PyDatagram import PyDatagram
 
 from direct.showbase.DirectObject import DirectObject
@@ -26,4 +25,4 @@ taskMgr.add(worldServer.tskReaderPolling,"Poll the connection reader",extraArgs 
 taskMgr.add(Active.updatePlayers,"Update Every Player",extraArgs = [worldServer,None,"positions"])
 
 #print "successful"
-run()
+base.run()
