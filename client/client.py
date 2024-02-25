@@ -99,7 +99,7 @@ class Me(DirectObject):
                            {"run": "models/ralph-run",
                             "walk": "models/ralph-walk"})
 
-        self.actorHead = self.model.exposeJoint(None, 'modelRoot', 'Joint8')
+        #self.actorHead = self.model.exposeJoint(None, 'modelRoot', 'Joint8')
         # self.model.setScale(4)
         self.playernum = None
         self.timeSinceLastUpdate = 0
@@ -122,7 +122,7 @@ class Me(DirectObject):
         self.cameraDistance = 50
         # Initialize the pitch of the camera
         self.cameraPitch = 10
-
+        self.username ="cayuse"
         self.camDummy = self.model.attachNewNode("camDummy")
         self.camDummy.setZ(10)
         base.disableMouse()

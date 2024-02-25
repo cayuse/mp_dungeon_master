@@ -27,10 +27,13 @@ Torches()
 GoldenKeys()
 chatReg = chatRegulator(worldClient,keys)
 
+print("updating name")
+w.UpdateName(me, worldClient)
 taskMgr.add(N.updatePlayers,"keep every player where they are supposed to be",extraArgs = [me])
 taskMgr.add(me.move,"move our penguin", extraArgs = [keys,Terrain])
 taskMgr.add(worldClient.tskReaderPolling,"Poll the connection reader",extraArgs = [me,N,chatReg])
 taskMgr.add(w.UpdateWorld,"keep the world up to date",extraArgs = [me,worldClient])
+
 
 #=============================================================================#
 #test code for lighting, normal mapping, etc...#

@@ -12,7 +12,7 @@ class Player(DirectObject):
     def __init__(self):
         self.currentPos = {'x': 244, 'y': 188, 'z': 0, 'h': 0, 'p': 0, 'r': 0}  # stores rotation too
         self.isMoving = False
-        self.username = ""
+        self.username = "cayuse"
 
     def load(self):
         self.model = Actor("models/ralph",
@@ -139,6 +139,15 @@ class World(DirectObject):  # This class will control anything related to the vi
             self.timeSinceLastUpdate = 0
         return Task.cont
 
+    def UpdateName(self, meClass, clientClass):
+        print("update name entered")
+        self.datagram = PyDatagram()
+        self.datagram.addString("newname")
+        self.datagram.addString(meClass.username)
+        try:
+            clientClass.cWriter.send(self.datagram, clientClass.Connection)
+        except:
+            print("No connection to the server. You are in stand alone mode.")
 
 class chatRegulator(DirectObject):
     def __init__(self, clientClass, keysClass):

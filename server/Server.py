@@ -76,15 +76,15 @@ class PlayerReg(DirectObject): #This class will hold anything that is related to
 		
 		if(type == "chat"):
 			#Keep players up to date with all the chat thats goin on
-			self.iterator = data
+			#self.iterator = data
 			self.datagram = PyDatagram()
 			self.datagram.addString("chat")
-			self.text = self.iterator.getString()
+			self.text = data
 			self.datagram.addString(self.text)
 			print(self.text,' ',str(serverClass))
 			for k in self.PlayerList:
 				serverClass.cWriter.send(self.datagram,k.connectionID)
-				
+
 				
 		
 	def updateData(self,connection, datagram,serverClass):
@@ -100,10 +100,21 @@ class PlayerReg(DirectObject): #This class will hold anything that is related to
 					k.currentPos['p'] = self.iterator.getFloat64()
 					k.currentPos['r'] = self.iterator.getFloat64()
 					k.isMoving = self.iterator.getBool()
+
 		if (self.type == "chat"):
-			self.updatePlayers(serverClass,self.iterator,"chat")
 			for k in self.PlayerList:
-				print(k.isMoving)
+				if (k.connectionID == connection):
+					msg = k.username + ": " + self.iterator.getString()
+					self.updatePlayers(serverClass,msg,"chat")
+
+		if(self.type == "newname"):
+			print("trying new name")
+			for k in self.PlayerList:
+				name = self.iterator.getString()
+				print("newname recieved: " + name)
+				if (k.connectionID == connection):
+					k.username = name
+
 
 	def sendInitialInfo(self,i,server): #Initialize the new Player
 		self.con = self.PlayerList[i].connectionID #set the connection to the player's connection
