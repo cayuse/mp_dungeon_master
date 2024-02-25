@@ -11,8 +11,10 @@ except ImportError:
 
 class Torches(DirectObject):
     def __init__(self):
-        stream = file('models/torches.yaml', 'r')
-        torches = load(stream)
+        #stream = file('models/torches.yaml', 'r')
+        #torches = load(stream)
+        with open ("models/torches.yaml") as stream:
+            torches = load(stream, Loader=Loader)
         tex = loader.loadTexture("models/rocks.jpg")
         for torch in torches:
             x = torch[1]

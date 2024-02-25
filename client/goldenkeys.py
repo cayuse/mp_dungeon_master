@@ -9,8 +9,10 @@ except ImportError:
 
 class GoldenKeys(DirectObject):  # This class will regulate the players
     def __init__(self):
-        stream = file('models/keys.yaml', 'r')
-        keys = load(stream)
+        with open ("models/keys.yaml") as stream:
+            keys = load(stream, Loader=Loader)
+        #stream = file('models/keys.yaml', 'r')
+        #keys = load(stream)
         fire = loader.loadTexture("models/fire-key.png")
         ice  = loader.loadTexture("models/ice-key.png")
         gold = loader.loadTexture("models/golden-key.tif")
