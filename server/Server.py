@@ -109,9 +109,9 @@ class PlayerReg(DirectObject): #This class will hold anything that is related to
 
 		if(self.type == "newname"):
 			print("trying new name")
+			name = self.iterator.getString()
+			print("newname recieved: " + name)
 			for k in self.PlayerList:
-				name = self.iterator.getString()
-				print("newname recieved: " + name)
 				if (k.connectionID == connection):
 					k.username = name
 
