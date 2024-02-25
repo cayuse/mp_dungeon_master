@@ -67,6 +67,7 @@ class PlayerReg(DirectObject): #This class will hold anything that is related to
 						self.datagram.addFloat64(self.PlayerList[k].currentPos['h'])
 						self.datagram.addFloat64(self.PlayerList[k].currentPos['p'])
 						self.datagram.addFloat64(self.PlayerList[k].currentPos['r'])
+						#self.datagram.addBool(self.PlayerList[k].isMoving(True))
 					for k in self.PlayerList:
 						self.conn = k.connectionID
 						serverClass.cWriter.send(self.datagram,self.conn)

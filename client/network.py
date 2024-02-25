@@ -99,6 +99,10 @@ class PlayerReg(DirectObject):  # This class will regulate the players
                                                        self.playerList[k].currentPos['h'],
                                                        self.playerList[k].currentPos['p'],
                                                        self.playerList[k].currentPos['r'])
+                    if (self.playerList[k].isMoving):
+                        self.playerlist[k].model.loop("walk")
+                    else:
+                        self.playerlist[k].pose("walk", 5)
         return Task.cont
 
 
@@ -122,6 +126,7 @@ class World(DirectObject):  # This class will control anything related to the vi
             self.datagram.addFloat64(meClass.model.getH())
             self.datagram.addFloat64(meClass.model.getP())
             self.datagram.addFloat64(meClass.model.getR())
+            self.datagram.addBool(meClass.isMoving)
             try:
                 clientClass.cWriter.send(self.datagram, clientClass.Connection)
             except:
