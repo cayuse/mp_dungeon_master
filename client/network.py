@@ -62,6 +62,7 @@ class PlayerReg(DirectObject):  # This class will regulate the players
                     self.playerList[i].currentPos['h'] = self.iterator.getFloat64()
                     self.playerList[i].currentPos['p'] = self.iterator.getFloat64()
                     self.playerList[i].currentPos['r'] = self.iterator.getFloat64()
+                    self.playerList[i].isMoving = self.iterator.getBool()
                 for i in range(int(self.numofplayers), int(self.num)):
                     if (i != m.playernum):
                         self.playerList.append(Player())
@@ -72,6 +73,7 @@ class PlayerReg(DirectObject):  # This class will regulate the players
                         self.playerList[i].currentPos['h'] = self.iterator.getFloat64()
                         self.playerList[i].currentPos['p'] = self.iterator.getFloat64()
                         self.playerList[i].currentPos['r'] = self.iterator.getFloat64()
+                        self.playerList[i].isMoving = self.iterator.getBool()
                     else:
                         self.playerList.append(Player())
                 self.numofplayers = self.num
@@ -83,12 +85,12 @@ class PlayerReg(DirectObject):  # This class will regulate the players
                     self.playerList[i].currentPos['h'] = self.iterator.getFloat64()
                     self.playerList[i].currentPos['p'] = self.iterator.getFloat64()
                     self.playerList[i].currentPos['r'] = self.iterator.getFloat64()
+                    self.playerList[i].isMoving = self.iterator.getBool()
         if (self.type == "chat"):
             self.text = self.iterator.getString()
             chatClass.setText(self.text)
 
     def updatePlayers(self, m):
-
         if (self.numofplayers != 0):
             for k in range(int(self.numofplayers)):
                 # As long as the player is not the client put it where the server says
@@ -99,10 +101,12 @@ class PlayerReg(DirectObject):  # This class will regulate the players
                                                        self.playerList[k].currentPos['h'],
                                                        self.playerList[k].currentPos['p'],
                                                        self.playerList[k].currentPos['r'])
+                    #ism = self.playerList[k].isMoving
+                    #print(ism)
                     if (self.playerList[k].isMoving):
-                        self.playerlist[k].model.loop("walk")
+                        self.playerList[k].model.loop("walk")
                     else:
-                        self.playerlist[k].pose("walk", 5)
+                        self.playerList[k].model.pose("walk", 5)
         return Task.cont
 
 

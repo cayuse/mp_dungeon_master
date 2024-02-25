@@ -67,7 +67,7 @@ class PlayerReg(DirectObject): #This class will hold anything that is related to
 						self.datagram.addFloat64(self.PlayerList[k].currentPos['h'])
 						self.datagram.addFloat64(self.PlayerList[k].currentPos['p'])
 						self.datagram.addFloat64(self.PlayerList[k].currentPos['r'])
-						#self.datagram.addBool(self.PlayerList[k].isMoving(True))
+						self.datagram.addBool(self.PlayerList[k].isMoving)
 					for k in self.PlayerList:
 						self.conn = k.connectionID
 						serverClass.cWriter.send(self.datagram,self.conn)
@@ -99,9 +99,12 @@ class PlayerReg(DirectObject): #This class will hold anything that is related to
 					k.currentPos['h'] = self.iterator.getFloat64()
 					k.currentPos['p'] = self.iterator.getFloat64()
 					k.currentPos['r'] = self.iterator.getFloat64()
+					k.isMoving = self.iterator.getBool()
 		if (self.type == "chat"):
 			self.updatePlayers(serverClass,self.iterator,"chat")
-	
+			for k in self.PlayerList:
+				print(k.isMoving)
+
 	def sendInitialInfo(self,i,server): #Initialize the new Player
 		self.con = self.PlayerList[i].connectionID #set the connection to the player's connection
 		self.datagram = PyDatagram() #create a datagram instance
