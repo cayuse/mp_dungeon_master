@@ -5,6 +5,7 @@ from direct.distributed.PyDatagram import PyDatagram
 from direct.distributed.PyDatagramIterator import PyDatagramIterator
 from direct.actor.Actor import Actor
 from direct.task.Task import Task
+from panda3d.core import TextNode
 from direct.gui.DirectGui import *
 from direct.interval import ProjectileInterval
 #base = ShowBase()

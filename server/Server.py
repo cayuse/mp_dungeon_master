@@ -3,6 +3,7 @@ from direct.distributed.PyDatagramIterator import PyDatagramIterator
 from direct.distributed.PyDatagram import PyDatagram
 from direct.showbase.DirectObject import DirectObject
 from direct.task.Task import Task
+import re
 
 class Server(QueuedConnectionManager):
 	def __init__(self,p,b):
@@ -49,12 +50,12 @@ class PlayerReg(DirectObject): #This class will hold anything that is related to
 		
 	
 	def updatePlayers(self,serverClass,data,type):
-		if (type == "positions"):
+		if type == "positions":
 			#keep players updated on their position
 			self.elapsed = globalClock.getDt()
 			self.timeSinceLastUpdate += self.elapsed
-			if (self.timeSinceLastUpdate > 0.1):
-				if (self.active):
+			if self.timeSinceLastUpdate > 0.1:
+				if self.active:
 					self.datagram = PyDatagram()
 					self.datagram.addString("update")
 					#add the number of players
@@ -74,7 +75,7 @@ class PlayerReg(DirectObject): #This class will hold anything that is related to
 				self.timeSinceLastUpdate = 0
 			return Task.cont
 		
-		if(type == "chat"):
+		if type == "chat":
 			#Keep players up to date with all the chat thats goin on
 			#self.iterator = data
 			self.datagram = PyDatagram()
@@ -90,7 +91,7 @@ class PlayerReg(DirectObject): #This class will hold anything that is related to
 	def updateData(self,connection, datagram,serverClass):
 		self.iterator = PyDatagramIterator(datagram)
 		self.type = self.iterator.getString()
-		if (self.type == "positions"):
+		if self.type == "positions":
 			for k in self.PlayerList:
 				if (k.connectionID == connection):
 					k.currentPos['x'] = self.iterator.getFloat64()
@@ -101,19 +102,42 @@ class PlayerReg(DirectObject): #This class will hold anything that is related to
 					k.currentPos['r'] = self.iterator.getFloat64()
 					k.isMoving = self.iterator.getBool()
 
-		if (self.type == "chat"):
-			for k in self.PlayerList:
-				if (k.connectionID == connection):
-					msg = k.username + ": " + self.iterator.getString()
-					self.updatePlayers(serverClass,msg,"chat")
+		if self.type == "chat":
+			msg = self.iterator.getString()
+			self.chatHelper(connection, serverClass, msg)
 
-		if(self.type == "newname"):
+		if self.type == "newname":
 			print("trying new name")
 			name = self.iterator.getString()
 			print("newname recieved: " + name)
 			for k in self.PlayerList:
 				if (k.connectionID == connection):
 					k.username = name
+
+	def chatHelper(self, connection, serverClass, msg):
+		slash = re.compile('^/')
+		if slash.match(msg):
+			#message is a console command
+			self.commandHelper(connection,serverClass,msg)
+		else:
+			#message is a chat msg.
+			for k in self.PlayerList:
+				if (k.connectionID == connection):
+					msg = k.username + ": " + msg
+					self.updatePlayers(serverClass,msg,"chat")
+
+	def commandHelper(self, connection, serverClass, msg):
+		match msg.split(' ', 1)[0]:
+			case "/username":
+				print("got new username" + msg)
+				for idx, k in enumerate(self.PlayerList):
+					if k.connectionID == connection:
+						name = k.username
+						self.PlayerList[idx].username = msg.split(' ', 1)[1]
+						msg = name + " is now know as " + self.PlayerList[idx].username
+						self.updatePlayers(serverClass,msg, "chat")
+			case "/quit":
+				pass #this should be a quit command for example
 
 
 	def sendInitialInfo(self,i,server): #Initialize the new Player

@@ -1,5 +1,7 @@
 from direct.showbase.DirectObject import DirectObject
 from direct.task.Task import Task
+from direct.distributed.PyDatagram import PyDatagram
+from direct.distributed.PyDatagramIterator import PyDatagramIterator
 from . import Player
 
 class PlayerReg(DirectObject):  # This class will regulate the players

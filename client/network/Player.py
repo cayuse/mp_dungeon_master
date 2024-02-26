@@ -1,5 +1,5 @@
 from direct.showbase.DirectObject import DirectObject
-
+from direct.actor.Actor import Actor
 class Player(DirectObject):
     def __init__(self):
         self.currentPos = {'x': 244, 'y': 188, 'z': 0, 'h': 0, 'p': 0, 'r': 0}  # stores rotation too
