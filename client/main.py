@@ -5,10 +5,11 @@ from panda3d.core import *
 from direct.distributed.PyDatagram import PyDatagram
 from direct.distributed.PyDatagramIterator import PyDatagramIterator 
 from direct.actor.Actor import Actor
-from client import *
+from client import Client, Keys, Me, Terrain, chatRegulator
+from network import World, PlayerReg
 from torches import *
 from goldenkeys import *
-from network import *
+#from network import *
 from MapObjects import *
 import sys
 

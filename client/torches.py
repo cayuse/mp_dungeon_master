@@ -1,7 +1,7 @@
 from panda3d.core import *
 from direct.showbase.DirectObject import DirectObject
-base.enableParticles()
 from direct.particles.ParticleEffect import ParticleEffect
+base.enableParticles()
 import sys
 from yaml import load
 try:
@@ -15,7 +15,7 @@ class Torches(DirectObject):
         #torches = load(stream)
         with open ("models/torches.yaml") as stream:
             torches = load(stream, Loader=Loader)
-        tex = loader.loadTexture("models/rocks.jpg")
+        tex = loader.loadTexture("models/gold-metal1.jpg")
         for torch in torches:
             x = torch[1]
             y = 256-torch[0]

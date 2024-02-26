@@ -20,7 +20,7 @@ class GoldenKeys(DirectObject):  # This class will regulate the players
             self.key = loader.loadModel("models/golden-key")
             if key[2] == 'f':
                 self.key.setTexture(fire,1)
-            elif key[2] == 'w':
+            elif key[2] == 'i':
                 self.key.setTexture(ice,1)
             else:
                 self.key.setTexture(gold,1)
