@@ -1,8 +1,8 @@
-#from panda3d.core import *
 from .myPan.myPan import base, playerScale, playerSpeed
 from direct.showbase.DirectObject import DirectObject
 #import direct.directbase.DirectStart
-from panda3d.core import WindowProperties, Point3, Vec3
+from panda3d.core import WindowProperties, Point3, Vec3, BitMask32
+from panda3d.core import CollisionTraverser, CollisionHandlerPusher, CollisionNode, CollisionSphere
 from direct.distributed.PyDatagram import PyDatagram
 from direct.distributed.PyDatagramIterator import PyDatagramIterator
 from direct.actor.Actor import Actor
