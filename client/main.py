@@ -1,12 +1,13 @@
-import direct.directbase.DirectStart
-from direct.showbase.DirectObject import DirectObject
-from direct.task.Task import Task
-from panda3d.core import *
-from direct.distributed.PyDatagram import PyDatagram
-from direct.distributed.PyDatagramIterator import PyDatagramIterator 
-from direct.actor.Actor import Actor
+from client.myPan.myPan import base
+#import direct.directbase.DirectStart
+#from direct.showbase.DirectObject import DirectObject
+#from direct.task.Task import Task
+
+#from direct.distributed.PyDatagram import PyDatagram
+#from direct.distributed.PyDatagramIterator import PyDatagramIterator
+#from direct.actor.Actor import Actor
 from client import Client, Keys, Me, Terrain, chatRegulator
-from network import World, PlayerReg
+from client.network import World, PlayerReg
 from torches import *
 from goldenkeys import *
 #from network import *
@@ -17,6 +18,7 @@ import sys
 
 base.disableMouse()
 base.camera.setPos(0,0,10)
+
 #establish connection > send/receive updates > update world
 worldClient = Client(9099,"127.0.0.1")
 Terrain = Terrain()
@@ -30,10 +32,10 @@ chatReg = chatRegulator(worldClient,keys)
 
 print("updating name")
 w.UpdateName(me, worldClient)
-taskMgr.add(N.updatePlayers,"keep every player where they are supposed to be",extraArgs = [me])
-taskMgr.add(me.move,"move our penguin", extraArgs = [keys,Terrain])
-taskMgr.add(worldClient.tskReaderPolling,"Poll the connection reader",extraArgs = [me,N,chatReg])
-taskMgr.add(w.UpdateWorld,"keep the world up to date",extraArgs = [me,worldClient])
+base.taskMgr.add(N.updatePlayers,"keep every player where they are supposed to be",extraArgs = [me])
+base.taskMgr.add(me.move,"move our penguin", extraArgs = [keys,Terrain])
+base.taskMgr.add(worldClient.tskReaderPolling,"Poll the connection reader",extraArgs = [me,N,chatReg])
+base.taskMgr.add(w.UpdateWorld,"keep the world up to date",extraArgs = [me,worldClient])
 
 
 #=============================================================================#
@@ -41,9 +43,9 @@ taskMgr.add(w.UpdateWorld,"keep the world up to date",extraArgs = [me,worldClien
 #ambient light
 alight = AmbientLight('alight')
 alight.setColor(Vec4(0.1, 0.1, 0.1, 0.1))
-alnp = render.attachNewNode(alight)
-render.setLight(alnp)
-render.setShaderAuto()
+alnp = base.render.attachNewNode(alight)
+base.render.setLight(alnp)
+base.render.setShaderAuto()
 me.model.setShaderAuto()
 #me.model.setNormalMap("models/nskinrd-normal.jpg")
 

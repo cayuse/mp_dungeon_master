@@ -1,4 +1,6 @@
-from panda3d.core import *
+#from panda3d.core import *
+from .myPan.myPan import base
+from panda3d.core import GeoMipTerrain, Filename, Material
 from direct.showbase.DirectObject import DirectObject
 from direct.distributed.PyDatagram import PyDatagram
 from direct.distributed.PyDatagramIterator import PyDatagramIterator
@@ -33,26 +35,26 @@ class Terrain(GeoMipTerrain):
         self.terrain.getRoot().setSz(12)
         self.time = 0
         self.elapsed = 0
-        self.terrain.getRoot().reparentTo(render)
+        self.terrain.getRoot().reparentTo(base.render)
         self.terrain.generate()
 
-        self.roof = loader.loadModel("terrains/roof.egg")
+        self.roof = base.loader.loadModel("terrains/roof.egg")
         self.roof.setPosHprScale(0,257,18,0,180,0,1,1,1)
         #self.box.setScale(2)
         #self.box.setColor(1,1,0)
-        rooftex = loader.loadTexture("terrains/roof_TM.png")
+        rooftex = base.loader.loadTexture("terrains/roof_TM.png")
         self.roof.setTexture(rooftex, 1)
         self.myMaterial = Material()
         self.myMaterial.setShininess(0.0)  # Make this material shiny
         #self.myMaterial.setAmbient((0, 1, 0, 1))  # Make this material blue
         self.myMaterial.setEmission((0, 0.2, 0, 1))
         self.roof.setMaterial(self.myMaterial)  # Apply the material to this nodePath
-        self.roof.reparentTo(render)
+        self.roof.reparentTo(base.render)
         # self.terrain.getRoot().setTexture(myTexture) #pjb UNcomment this line out if you want to set texture directly
         # taskMgr.doMethodLater(5, self.updateTerrain, 'Update the Terrain')
         # taskMgr.add(self.updateTerrain, "update")
     def updateTerrain(self, task):
-        self.elapsed = globalClock.getDt()
+        self.elapsed = base.globalClock.getDt()
         self.time += self.elapsed
         if (self.time > 5):
             self.terrain.update()

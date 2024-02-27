@@ -1,5 +1,8 @@
-from panda3d.core import *
+#from panda3d.core import *
+from .myPan.myPan import base, playerScale, playerSpeed
 from direct.showbase.DirectObject import DirectObject
+#import direct.directbase.DirectStart
+from panda3d.core import WindowProperties, Point3, Vec3
 from direct.distributed.PyDatagram import PyDatagram
 from direct.distributed.PyDatagramIterator import PyDatagramIterator
 from direct.actor.Actor import Actor
@@ -36,8 +39,8 @@ class Me(DirectObject):
         # self.model.setScale(4)
         self.playernum = None
         self.timeSinceLastUpdate = 0
-        self.model.reparentTo(render)
-        self.model.setScale(0.4)
+        self.model.reparentTo(base.render)
+        self.model.setScale(playerScale)
         self.isMoving = False
         self.AnimControl = self.model.getAnimControl('walk')
         #self.AnimControl.setPlayRate(0.05)
@@ -67,7 +70,7 @@ class Me(DirectObject):
         self.playernum = int
 
     def move(self, keyClass, terrainClass):
-        speed = 40
+        speed = playerSpeed
         # self.meTerrainHeight = terrainClass.terrain.getElevation(self.model.getX(),self.model.getY()) * self.terrainScale
         # self.camTerrainHeight = terrainClass.terrain.getElevation(camera.getX(),camera.getY()) * self.terrainScale
         self.elapsed = globalClock.getDt()
@@ -128,13 +131,13 @@ class Me(DirectObject):
         return Task.cont
 
     def fireFire(self, terrainClass):
-        self.emptyFire = NodePath("EmptyFire")
-        self.emptyFire.reparentTo(render)
+        self.emptyFire = base.NodePath("EmptyFire")
+        self.emptyFire.reparentTo(base.render)
         startPos = Vec3(self.model.getX(), self.model.getZ(), 2)
         self.emptyFire.setPos(startPos)
         p = ParticleEffect()
         p.loadConfig("particles/fireball.ptf")
-        p.start(parent=self.emptyFire, renderParent=render)
+        p.start(parent=self.emptyFire, renderParent=base.render)
         # setup the projectile interval
         self.trajectory = ProjectileInterval(self.emptyFire,
                                              startPos=startPos,

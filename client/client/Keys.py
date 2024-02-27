@@ -1,4 +1,5 @@
-from panda3d.core import *
+#from panda3d.core import *
+from .myPan.myPan import base
 from direct.showbase.DirectObject import DirectObject
 from direct.distributed.PyDatagram import PyDatagram
 from direct.distributed.PyDatagramIterator import PyDatagramIterator

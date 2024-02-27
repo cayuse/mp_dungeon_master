@@ -1,3 +1,4 @@
+from ..myPan.myPan import playerScale
 from direct.showbase.DirectObject import DirectObject
 from direct.actor.Actor import Actor
 class Player(DirectObject):
@@ -11,7 +12,7 @@ class Player(DirectObject):
                            {"run": "models/ralph-run",
                             "walk": "models/ralph-walk"})
         self.model.reparentTo(render)
-        self.model.setScale(0.5)
+        self.model.setScale(playerScale)
         self.isMoving = False
         self.AnimControl = self.model.getAnimControl('walk')
         self.AnimControl.setPlayRate(0.05)
