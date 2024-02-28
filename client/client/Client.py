@@ -1,6 +1,6 @@
 from .myPan.myPan import base
 from direct.showbase.DirectObject import DirectObject
-from panda3d.core import QueuedConnectionManager, QueuedConnectionReader, ConnectionWriter
+from panda3d.core import QueuedConnectionManager, QueuedConnectionReader, ConnectionWriter, NetDatagram
 from direct.distributed.PyDatagram import PyDatagram
 from direct.distributed.PyDatagramIterator import PyDatagramIterator
 from direct.actor.Actor import Actor
@@ -33,7 +33,7 @@ class Client(DirectObject):
     def tskReaderPolling(self, m, playerRegulator,
                          chatClass):  # this function checks to see if there is any data from the server
         if self.cReader.dataAvailable():
-            self.datagram = base.NetDatagram()  # catch the incoming data in this instance
+            self.datagram = NetDatagram()  # catch the incoming data in this instance
             # Check the return value; if we were threaded, someone else could have
             # snagged this data before we did
             if self.cReader.getData(self.datagram):

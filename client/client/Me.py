@@ -1,10 +1,11 @@
 from .myPan.myPan import base, playerScale, playerSpeed
 from direct.showbase.DirectObject import DirectObject
 #import direct.directbase.DirectStart
-from panda3d.core import WindowProperties, Point3, Vec3, BitMask32
+from panda3d.core import WindowProperties, Point3, Vec3, BitMask32, NodePath
 from panda3d.core import CollisionTraverser, CollisionHandlerPusher, CollisionNode, CollisionSphere
 from direct.distributed.PyDatagram import PyDatagram
 from direct.distributed.PyDatagramIterator import PyDatagramIterator
+from direct.interval.ProjectileInterval import ProjectileInterval
 from direct.actor.Actor import Actor
 from direct.task.Task import Task
 from direct.gui.DirectGui import *
@@ -86,7 +87,7 @@ class Me(DirectObject):
             self.model.setY(self.model, (self.elapsed * speed))
         #  FIRE
         if (keyClass.keyMap["fire1"] !=0):
-            self.fireFire()
+            self.fireFire(terrainClass)
 
 
         if (keyClass.keyMap["forward"] != 0) or (keyClass.keyMap["left"] != 0) or (keyClass.keyMap["right"] != 0):
@@ -131,7 +132,8 @@ class Me(DirectObject):
         return Task.cont
 
     def fireFire(self, terrainClass):
-        self.emptyFire = base.NodePath("EmptyFire")
+        self.emptyFire = NodePath("EmptyFire")
+        #self.emptyFire = loader.loadModelCopy('models/golden-key')
         self.emptyFire.reparentTo(base.render)
         startPos = Vec3(self.model.getX(), self.model.getZ(), 2)
         self.emptyFire.setPos(startPos)
@@ -139,9 +141,7 @@ class Me(DirectObject):
         p.loadConfig("particles/fireball.ptf")
         p.start(parent=self.emptyFire, renderParent=base.render)
         # setup the projectile interval
-        self.trajectory = ProjectileInterval(self.emptyFire,
-                                             startPos=startPos,
-                                             endPos=Vec3(0,0,2), duration=3)
+        self.trajectory = ProjectileInterval(self.emptyFire, startPos=startPos, endPos=Vec3(0,0,2), duration=3)
         self.trajectory.loop()
         return Task.count
 
