@@ -1,6 +1,7 @@
 from .myPan.myPan import base, playerScale, playerSpeed
 from direct.showbase.DirectObject import DirectObject
 #import direct.directbase.DirectStart
+from panda3d.core import *
 from panda3d.core import WindowProperties, Point3, Vec3, BitMask32, NodePath
 from panda3d.core import CollisionTraverser, CollisionHandlerPusher, CollisionNode, CollisionSphere
 from direct.distributed.PyDatagram import PyDatagram
@@ -12,6 +13,7 @@ from direct.gui.DirectGui import *
 from direct.interval import ProjectileInterval
 base.enableParticles()
 from direct.particles.ParticleEffect import ParticleEffect
+from .vfx import vfx, MovingVfx
 import sys
 
 from yaml import load
@@ -32,16 +34,17 @@ class Me(DirectObject):
                                                      "hit": "models/pc/female_hit",
                                                      "idle": "models/pc/female_idle"})
         '''
-        self.model = Actor("models/ralph",
-                           {"run": "models/ralph-run",
-                            "walk": "models/ralph-walk"})
+        self.model = Actor("models/wiz/male2",
+                           {"strafe": "models/wiz/male2_strafe",
+                            "walk": "models/wiz/male2_walk"})
 
         #self.actorHead = self.model.exposeJoint(None, 'modelRoot', 'Joint8')
         # self.model.setScale(4)
         self.playernum = None
         self.timeSinceLastUpdate = 0
+        self.model.setScale((0.1,0.1,0.1))
         self.model.reparentTo(base.render)
-        self.model.setScale(playerScale)
+        #self.model.setScale(.01)
         self.isMoving = False
         self.AnimControl = self.model.getAnimControl('walk')
         #self.AnimControl.setPlayRate(0.05)
@@ -56,7 +59,7 @@ class Me(DirectObject):
         base.camera.reparentTo(self.model)
         self.cameraTargetHeight = 3.0
         # How far should the camera be from Model
-        self.cameraDistance = 50
+        self.cameraDistance = 500
         # Initialize the pitch of the camera
         self.cameraPitch = 10
         self.username ="cayuse"
@@ -66,7 +69,16 @@ class Me(DirectObject):
         props = WindowProperties()
         props.setCursorHidden(True)
         base.win.requestProperties(props)
-
+        #projectile
+        self.emptyFire = NodePath("EmptyFire")
+        #self.emptyFire = loader.loadModelCopy('models/golden-key')
+        self.emptyFire.reparentTo(base.render)
+        self.point_light = PointLight('point_light')
+        self.point_light.setColor((1,1,1,1))
+        self.point_light_node = base.render.attachNewNode(self.point_light)
+        self.point_light_node.reparentTo(self.emptyFire)
+        self.point_light_node.setPos(0,0,0)
+        base.render.setLight(self.point_light_node)
     def setPlayerNum(self, int):
         self.playernum = int
 
@@ -90,9 +102,13 @@ class Me(DirectObject):
             self.fireFire(terrainClass)
 
 
-        if (keyClass.keyMap["forward"] != 0) or (keyClass.keyMap["left"] != 0) or (keyClass.keyMap["right"] != 0):
+        if (keyClass.keyMap["forward"] != 0) or (keyClass.keyMap["back"]):
             if self.isMoving is False:
                 self.model.loop("walk")
+                self.isMoving = True
+        elif (keyClass.keyMap["left"] != 0) or (keyClass.keyMap["right"] != 0):
+            if self.isMoving is False:
+                self.model.loop("strafe")
                 self.isMoving = True
         else:
             if self.isMoving:
@@ -132,16 +148,13 @@ class Me(DirectObject):
         return Task.cont
 
     def fireFire(self, terrainClass):
-        self.emptyFire = NodePath("EmptyFire")
-        #self.emptyFire = loader.loadModelCopy('models/golden-key')
-        self.emptyFire.reparentTo(base.render)
-        startPos = Vec3(self.model.getX(), self.model.getZ(), 2)
+        startPos = Vec3(self.model.getX(), self.model.getY(), self.model.getZ()+2)
         self.emptyFire.setPos(startPos)
         p = ParticleEffect()
         p.loadConfig("particles/fireball.ptf")
         p.start(parent=self.emptyFire, renderParent=base.render)
         # setup the projectile interval
-        self.trajectory = ProjectileInterval(self.emptyFire, startPos=startPos, endPos=Vec3(0,0,2), duration=3)
-        self.trajectory.loop()
-        return Task.count
+        self.trajectory = ProjectileInterval.ProjectileInterval(self.emptyFire, startPos=startPos, endPos=Vec3(122,175,0), duration=1)
+        self.trajectory.start()
+        return Task.cont
 

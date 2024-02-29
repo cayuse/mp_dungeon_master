@@ -1,1 +1,13 @@
 python -m venv .venv
+
+getting blender files into panda
+https://discourse.panda3d.org/t/how-to-export-blend-blender-file-to-egg/8415/7
+
+avolation code
+https://github.com/wezu/Avolition
+
+alice, some low quality art
+https://www.alice.org/gallery/index.php?page=gallery/Beach/index
+
+openart
+https://opengameart.org/content/fire
