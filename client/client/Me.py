@@ -1,6 +1,6 @@
 from .myPan.myPan import base, playerScale, playerSpeed
 from direct.showbase.DirectObject import DirectObject
-#import direct.directbase.DirectStart
+# import direct.directbase.DirectStart
 from panda3d.core import *
 from panda3d.core import WindowProperties, Point3, Vec3, BitMask32, NodePath
 from panda3d.core import CollisionTraverser, CollisionHandlerPusher, CollisionNode, CollisionSphere
@@ -11,16 +11,19 @@ from direct.actor.Actor import Actor
 from direct.task.Task import Task
 from direct.gui.DirectGui import *
 from direct.interval import ProjectileInterval
+
 base.enableParticles()
 from direct.particles.ParticleEffect import ParticleEffect
 from .vfx import vfx, MovingVfx
 import sys
 
 from yaml import load
+
 try:
     from yaml import CLoader as Loader
 except ImportError:
     from yaml import Loader
+
 
 class Me(DirectObject):
     def __init__(self, terrainClass):
@@ -38,21 +41,21 @@ class Me(DirectObject):
                            {"strafe": "models/wiz/male2_strafe",
                             "walk": "models/wiz/male2_walk"})
 
-        #self.actorHead = self.model.exposeJoint(None, 'modelRoot', 'Joint8')
+        # self.actorHead = self.model.exposeJoint(None, 'modelRoot', 'Joint8')
         # self.model.setScale(4)
         self.playernum = None
         self.timeSinceLastUpdate = 0
-        self.model.setScale((0.1,0.1,0.1))
+        self.model.setScale((0.1, 0.1, 0.1))
         self.model.reparentTo(base.render)
-        #self.model.setScale(.01)
+        # self.model.setScale(.01)
         self.isMoving = False
         self.AnimControl = self.model.getAnimControl('walk')
-        #self.AnimControl.setPlayRate(0.05)
+        # self.AnimControl.setPlayRate(0.05)
         self.model.setBlend(frameBlend=1)
-        #start position
-        #stream = file('models/start.yaml', 'r')
-        #start = load(stream)
-        #start = load('models/start.yaml', Loader=Loader)
+        # start position
+        # stream = file('models/start.yaml', 'r')
+        # start = load(stream)
+        # start = load('models/start.yaml', Loader=Loader)
         self.model.setPos(122, 175, 0)
         # STORE TERRAIN SCALE FOR LATER USE#
         self.terrainScale = terrainClass.terrain.getRoot().getSz()
@@ -62,23 +65,56 @@ class Me(DirectObject):
         self.cameraDistance = 500
         # Initialize the pitch of the camera
         self.cameraPitch = 10
-        self.username ="cayuse"
+        self.username = "cayuse"
         self.camDummy = self.model.attachNewNode("camDummy")
         self.camDummy.setZ(10)
         base.disableMouse()
         props = WindowProperties()
         props.setCursorHidden(True)
         base.win.requestProperties(props)
-        #projectile
-        self.emptyFire = NodePath("EmptyFire")
-        #self.emptyFire = loader.loadModelCopy('models/golden-key')
+        # projectile
+        #self.emptyFire = NodePath("EmptyFire")
+        self.emptyFire = loader.loadModel('vfx/vfx2')
+        self.emptyFire.setTexture(TextureStage.getDefault(), loader.loadTexture("vfx/plasm2.png"), 1)
         self.emptyFire.reparentTo(base.render)
+        self.emptyFire.setLightOff()
+        self.emptyFire.setHpr(-180, 0, 0)
+        self.emptyFire.lookAt(base.camera)
+        #self.emptyFire.loop(0.015)
         self.point_light = PointLight('point_light')
-        self.point_light.setColor((1,1,1,1))
+        self.point_light.setColor((1, 1, 1, 1))
         self.point_light_node = base.render.attachNewNode(self.point_light)
         self.point_light_node.reparentTo(self.emptyFire)
-        self.point_light_node.setPos(0,0,0)
+        self.point_light_node.setPos(0, 0, 0)
         base.render.setLight(self.point_light_node)
+        self.vfxU = -0.5
+        self.vfxV = 0
+        self.down = True
+        self.start()
+
+
+    def start(self, speed=0.04):
+        taskMgr.doMethodLater(speed, self.run, 'vfx')
+    def run(self, task):
+        #print("running")
+        #if not self.parent:
+        #    self.emptyFire.removeNode()
+        #    return task.done
+        #self.emptyFire.setPos(self.parent.getPos(render))
+        #self.emptyFire.setZ(self.vfx.getZ()+self.Z)
+        self.vfxU=self.vfxU+0.125
+        #self.vfxU=0.5
+        if self.vfxU>=1.0:
+            self.vfxU=0
+            self.vfxV=self.vfxV-0.125
+        if self.vfxV <=-1:
+            self.vfxV = 0
+            #self.emptyFire.removeNode()
+            #return task.done
+        #self.emptyFire.lookAt(base.camera)
+        self.emptyFire.setTexOffset(TextureStage.getDefault(), self.vfxU, self.vfxV)
+        print(str(self.vfxV) + " " + str(self.vfxU))
+        return task.again
     def setPlayerNum(self, int):
         self.playernum = int
 
@@ -98,9 +134,8 @@ class Me(DirectObject):
         if (keyClass.keyMap["back"] != 0):
             self.model.setY(self.model, (self.elapsed * speed))
         #  FIRE
-        if (keyClass.keyMap["fire1"] !=0):
+        if (keyClass.keyMap["fire1"] != 0):
             self.fireFire(terrainClass)
-
 
         if (keyClass.keyMap["forward"] != 0) or (keyClass.keyMap["back"]):
             if self.isMoving is False:
@@ -134,8 +169,8 @@ class Me(DirectObject):
             self.model.setH(self.model.getH() - 0.3 * deltaX)
             # find the new camera pitch and clamp it to a reasonable range
             self.cameraPitch = self.cameraPitch + 0.1 * deltaY
-            if (self.cameraPitch < -60): self.cameraPitch = -60
-            if (self.cameraPitch > 80): self.cameraPitch = 80
+            if self.cameraPitch < -60: self.cameraPitch = -60
+            if self.cameraPitch > 80: self.cameraPitch = 80
             base.camera.setHpr(0, self.cameraPitch, 0)
             # set the camera at around model's middle
             # We should pivot around here instead of the view target which is noticebly higher
@@ -148,13 +183,13 @@ class Me(DirectObject):
         return Task.cont
 
     def fireFire(self, terrainClass):
-        startPos = Vec3(self.model.getX(), self.model.getY(), self.model.getZ()+2)
+        startPos = Vec3(self.model.getX(), self.model.getY(), self.model.getZ() + 2)
         self.emptyFire.setPos(startPos)
-        p = ParticleEffect()
-        p.loadConfig("particles/fireball.ptf")
-        p.start(parent=self.emptyFire, renderParent=base.render)
+        #p = ParticleEffect()
+        #p.loadConfig("particles/fireball.ptf")
+        #p.start(parent=self.emptyFire, renderParent=base.render)
         # setup the projectile interval
-        self.trajectory = ProjectileInterval.ProjectileInterval(self.emptyFire, startPos=startPos, endPos=Vec3(122,175,0), duration=1)
+        self.trajectory = ProjectileInterval.ProjectileInterval(self.emptyFire, startPos=startPos,
+                                                                endPos=Vec3(122, 175, 0), duration=1)
         self.trajectory.start()
         return Task.cont
-
