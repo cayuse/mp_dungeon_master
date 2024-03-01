@@ -6,7 +6,7 @@ from client.myPan.myPan import base
 #from direct.distributed.PyDatagram import PyDatagram
 #from direct.distributed.PyDatagramIterator import PyDatagramIterator
 #from direct.actor.Actor import Actor
-from client import Client, Keys, Me, Terrain, chatRegulator
+from client import Client, Me, Keys, Terrain, chatRegulator
 from client.network import World, PlayerReg
 from torches import *
 from goldenkeys import *

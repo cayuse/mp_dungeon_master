@@ -74,17 +74,22 @@ class Me(DirectObject):
         base.win.requestProperties(props)
         # projectile
         #self.emptyFire = NodePath("EmptyFire")
+        self.fireNode = NodePath(PandaNode("empty_node"))
+        self.fireNode.set_pos_hpr(0,0,0,0,0,0)
+        self.fireNode.reparentTo(base.render)
         self.emptyFire = loader.loadModel('vfx/vfx2')
         self.emptyFire.setTexture(TextureStage.getDefault(), loader.loadTexture("vfx/plasm2.png"), 1)
-        self.emptyFire.reparentTo(base.render)
+        self.emptyFire.reparentTo(self.fireNode)
         self.emptyFire.setLightOff()
-        self.emptyFire.setHpr(-180, 0, 0)
-        self.emptyFire.lookAt(base.camera)
+        self.emptyFire.setHpr(0,0,0)
+        self.emptyFire.setHpr(-90, 0, 0)
+        self.emptyFire.setPos(0,0,0)
+        #self.emptyFire.lookAt(base.camera)
         #self.emptyFire.loop(0.015)
         self.point_light = PointLight('point_light')
         self.point_light.setColor((1, 1, 1, 1))
         self.point_light_node = base.render.attachNewNode(self.point_light)
-        self.point_light_node.reparentTo(self.emptyFire)
+        self.point_light_node.reparentTo(self.fireNode)
         self.point_light_node.setPos(0, 0, 0)
         base.render.setLight(self.point_light_node)
         self.vfxU = -0.5
@@ -111,9 +116,10 @@ class Me(DirectObject):
             self.vfxV = 0
             #self.emptyFire.removeNode()
             #return task.done
-        #self.emptyFire.lookAt(base.camera)
+        self.fireNode.lookAt(base.camera)
         self.emptyFire.setTexOffset(TextureStage.getDefault(), self.vfxU, self.vfxV)
-        print(str(self.vfxV) + " " + str(self.vfxU))
+        #print(str(self.vfxV) + " " + str(self.vfxU))
+        print(str(self.emptyFire.getHpr()), str(self.fireNode.getHpr()))
         return task.again
     def setPlayerNum(self, int):
         self.playernum = int
@@ -126,7 +132,8 @@ class Me(DirectObject):
         # base.camera.lookAt(self.actorHead)
         if (keyClass.keyMap["left"] != 0):
             self.model.setX(self.model, (self.elapsed * speed))
-            print(str(self.model.getX()), str(self.model.getY()), str(self.model.getZ()))
+            #print(str(self.model.getX()), str(self.model.getY()), str(self.model.getZ()))
+            print(str(self.model.getH()), str(self.model.getP()), str(self.model.getR()))
         if (keyClass.keyMap["right"] != 0):
             self.model.setX(self.model, -(self.elapsed * speed))
         if (keyClass.keyMap["forward"] != 0):
@@ -184,12 +191,12 @@ class Me(DirectObject):
 
     def fireFire(self, terrainClass):
         startPos = Vec3(self.model.getX(), self.model.getY(), self.model.getZ() + 2)
-        self.emptyFire.setPos(startPos)
+        self.fireNode.setPos(startPos)
         #p = ParticleEffect()
         #p.loadConfig("particles/fireball.ptf")
         #p.start(parent=self.emptyFire, renderParent=base.render)
         # setup the projectile interval
-        self.trajectory = ProjectileInterval.ProjectileInterval(self.emptyFire, startPos=startPos,
+        self.trajectory = ProjectileInterval.ProjectileInterval(self.fireNode, startPos=startPos,
                                                                 endPos=Vec3(122, 175, 0), duration=1)
         self.trajectory.start()
         return Task.cont
