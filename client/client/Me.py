@@ -11,6 +11,7 @@ from direct.actor.Actor import Actor
 from direct.task.Task import Task
 from direct.gui.DirectGui import *
 from direct.interval import ProjectileInterval
+import operator
 
 base.enableParticles()
 from direct.particles.ParticleEffect import ParticleEffect
@@ -92,37 +93,68 @@ class Me(DirectObject):
         self.point_light_node.reparentTo(self.fireNode)
         self.point_light_node.setPos(0, 0, 0)
         base.render.setLight(self.point_light_node)
-        self.vfxU = -0.5
+        self.vfxU = 0
         self.vfxV = 0
         self.down = True
+        self.sum_oper = operator.add
         self.start()
 
+    def updateVfxV(self):
+        pass
 
     def start(self, speed=0.04):
         taskMgr.doMethodLater(speed, self.run, 'vfx')
     def run(self, task):
-        #print("running")
-        #if not self.parent:
-        #    self.emptyFire.removeNode()
-        #    return task.done
-        #self.emptyFire.setPos(self.parent.getPos(render))
-        #self.emptyFire.setZ(self.vfx.getZ()+self.Z)
-        self.vfxU=self.vfxU+0.125
-        #self.vfxU=0.5
-        if self.vfxU>=1.0:
-            self.vfxU=0
-            self.vfxV=self.vfxV-0.125
-        if self.vfxV <=-1:
+        self.fireNode.lookAt(base.camera)
+        self.emptyFire.setTexOffset(TextureStage.getDefault(), self.vfxU*0.125, self.vfxV*-0.125) #starting state = 0,0
+        if self.down:
+            self.sum_oper = operator.add
+        else:
+            self.sum_oper = operator.sub
+        self.vfxU = self.sum_oper(self.vfxU, 1)
+        if self.vfxU >= 8.0:
+            if self.vfxV == 7:
+                self.vfxU = 7
+            else:
+                self.vfxU = 0
+            self.vfxV = self.sum_oper(self.vfxV, 1)
+        if self.vfxU < 0:
+            if self.vfxV == 0:
+                self.vfxU = 0
+            else:
+                self.vfxU = 7
+            self.vfxV = self.sum_oper(self.vfxV, 1)
+        if self.vfxV < 0:
             self.vfxV = 0
+            self.down = not self.down
+        if self.vfxV >=8:
+            self.vfxV = 7
+            self.down = not self.down
+
+        '''
+        self.vfxU = vfxU_oper(self.vfxU,0.125)
+        #self.vfxU=0.5
+        if self.vfxU >= 1.0 or self.vfxU == 0:
+            if self.down:
+                self.vfxU=0
+            else:
+                self.ufxU=1.0
+            self.vfxV = vfxV_oper(self.vfxV,0.125)
+        if self.vfxV <=-1 or self.vfxV > 0:
+            print("reversed")
+            self.vfxV=vfxU_oper(self.vfxU,0.125)
+            self.down = not self.down
             #self.emptyFire.removeNode()
             #return task.done
-        self.fireNode.lookAt(base.camera)
-        self.emptyFire.setTexOffset(TextureStage.getDefault(), self.vfxU, self.vfxV)
-        #print(str(self.vfxV) + " " + str(self.vfxU))
-        print(str(self.emptyFire.getHpr()), str(self.fireNode.getHpr()))
+        '''
+        #self.fireNode.lookAt(base.camera)
+        #self.emptyFire.setTexOffset(TextureStage.getDefault(), self.vfxU, self.vfxV)
+        #print(str(self.vfxU) + " " + str(self.vfxV))
+        #print(str(self.emptyFire.getHpr()), str(self.fireNode.getHpr()))
         return task.again
     def setPlayerNum(self, int):
         self.playernum = int
+
 
     def move(self, keyClass, terrainClass):
         speed = playerSpeed
