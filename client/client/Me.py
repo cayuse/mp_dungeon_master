@@ -1,7 +1,9 @@
 from .myPan.myPan import base, playerScale, playerSpeed
 from direct.showbase.DirectObject import DirectObject
+from .Projectile import Projectile
 # import direct.directbase.DirectStart
 from panda3d.core import *
+from panda3d.core import Texture
 from panda3d.core import WindowProperties, Point3, Vec3, BitMask32, NodePath
 from panda3d.core import CollisionTraverser, CollisionHandlerPusher, CollisionNode, CollisionSphere
 from direct.distributed.PyDatagram import PyDatagram
@@ -40,6 +42,7 @@ class Me(DirectObject):
         '''
         self.model = Actor("models/wiz/male2",
                            {"strafe": "models/wiz/male2_strafe",
+                            "attack": "models/wiz/male2_attack",
                             "walk": "models/wiz/male2_walk"})
 
         # self.actorHead = self.model.exposeJoint(None, 'modelRoot', 'Joint8')
@@ -73,88 +76,27 @@ class Me(DirectObject):
         props = WindowProperties()
         props.setCursorHidden(True)
         base.win.requestProperties(props)
-        # projectile
-        #self.emptyFire = NodePath("EmptyFire")
-        self.fireNode = NodePath(PandaNode("empty_node"))
-        self.fireNode.set_pos_hpr(0,0,0,0,0,0)
-        self.fireNode.reparentTo(base.render)
-        self.emptyFire = loader.loadModel('vfx/vfx2')
-        self.emptyFire.setTexture(TextureStage.getDefault(), loader.loadTexture("vfx/plasm2.png"), 1)
-        self.emptyFire.reparentTo(self.fireNode)
-        self.emptyFire.setLightOff()
-        self.emptyFire.setHpr(0,0,0)
-        self.emptyFire.setHpr(-90, 0, 0)
-        self.emptyFire.setPos(0,0,0)
-        #self.emptyFire.lookAt(base.camera)
-        #self.emptyFire.loop(0.015)
-        self.point_light = PointLight('point_light')
-        self.point_light.setColor((1, 1, 1, 1))
-        self.point_light_node = base.render.attachNewNode(self.point_light)
-        self.point_light_node.reparentTo(self.fireNode)
-        self.point_light_node.setPos(0, 0, 0)
-        base.render.setLight(self.point_light_node)
-        self.vfxU = 0
-        self.vfxV = 0
-        self.down = True
-        self.sum_oper = operator.add
-        self.start()
+        self.canFire = True
+        self.orbitRing = NodePath("orbitRing")
+        self.orbitRing.reparentTo(self.model)
+        self.orbitRing.setPos(0, -100, 0)
+        #self.orbitRing.setHpr(0,0,90)
+        self.myTarget = NodePath(PandaNode("myTarget"))
+        self.myTarget.reparentTo(self.orbitRing)
+        #self.myTarget.setPos(self.model.getX()+3,self.model.getY(), self.model.getZ())
+        terrainClass.setProjectorPos(self.myTarget.getPos(base.render)+Vec3(0,0,8))
 
-    def updateVfxV(self):
-        pass
 
-    def start(self, speed=0.04):
-        taskMgr.doMethodLater(speed, self.run, 'vfx')
-    def run(self, task):
-        self.fireNode.lookAt(base.camera)
-        self.emptyFire.setTexOffset(TextureStage.getDefault(), self.vfxU*0.125, self.vfxV*-0.125) #starting state = 0,0
-        if self.down:
-            self.sum_oper = operator.add
-        else:
-            self.sum_oper = operator.sub
-        self.vfxU = self.sum_oper(self.vfxU, 1)
-        if self.vfxU >= 8.0:
-            if self.vfxV == 7:
-                self.vfxU = 7
-            else:
-                self.vfxU = 0
-            self.vfxV = self.sum_oper(self.vfxV, 1)
-        if self.vfxU < 0:
-            if self.vfxV == 0:
-                self.vfxU = 0
-            else:
-                self.vfxU = 7
-            self.vfxV = self.sum_oper(self.vfxV, 1)
-        if self.vfxV < 0:
-            self.vfxV = 0
-            self.down = not self.down
-        if self.vfxV >=8:
-            self.vfxV = 7
-            self.down = not self.down
-
-        '''
-        self.vfxU = vfxU_oper(self.vfxU,0.125)
-        #self.vfxU=0.5
-        if self.vfxU >= 1.0 or self.vfxU == 0:
-            if self.down:
-                self.vfxU=0
-            else:
-                self.ufxU=1.0
-            self.vfxV = vfxV_oper(self.vfxV,0.125)
-        if self.vfxV <=-1 or self.vfxV > 0:
-            print("reversed")
-            self.vfxV=vfxU_oper(self.vfxU,0.125)
-            self.down = not self.down
-            #self.emptyFire.removeNode()
-            #return task.done
-        '''
-        #self.fireNode.lookAt(base.camera)
-        #self.emptyFire.setTexOffset(TextureStage.getDefault(), self.vfxU, self.vfxV)
-        #print(str(self.vfxU) + " " + str(self.vfxV))
-        #print(str(self.emptyFire.getHpr()), str(self.fireNode.getHpr()))
-        return task.again
     def setPlayerNum(self, int):
         self.playernum = int
 
+
+    def resetPlayer(self, task):
+        if not self.isMoving:
+            self.model.pose("walk", 5)
+        else:
+            self.model.loop("walk")
+        return task.done
 
     def move(self, keyClass, terrainClass):
         speed = playerSpeed
@@ -162,19 +104,30 @@ class Me(DirectObject):
         # self.camTerrainHeight = terrainClass.terrain.getElevation(camera.getX(),camera.getY()) * self.terrainScale
         self.elapsed = globalClock.getDt()
         # base.camera.lookAt(self.actorHead)
-        if (keyClass.keyMap["left"] != 0):
+        if keyClass.keyMap["left"] != 0:
             self.model.setX(self.model, (self.elapsed * speed))
-            #print(str(self.model.getX()), str(self.model.getY()), str(self.model.getZ()))
-            print(str(self.model.getH()), str(self.model.getP()), str(self.model.getR()))
-        if (keyClass.keyMap["right"] != 0):
+            print("me " + str(self.model.getPos(base.render)) + "tgt " + str(self.myTarget.getPos(base.render)))
+            #print("me"+str(self.model.getX()), str(self.model.getY()), str(self.model.getZ()))
+            #print("tgt"+str(self.myTarget.getX()), str(self.myTarget.getY()), str(self.myTarget.getZ()))
+            #print(str(self.model.getH()), str(self.model.getP()), str(self.model.getR()))
+        if keyClass.keyMap["right"] != 0:
             self.model.setX(self.model, -(self.elapsed * speed))
-        if (keyClass.keyMap["forward"] != 0):
+        if keyClass.keyMap["forward"] != 0:
             self.model.setY(self.model, -(self.elapsed * speed))
-        if (keyClass.keyMap["back"] != 0):
+        if keyClass.keyMap["back"] != 0:
             self.model.setY(self.model, (self.elapsed * speed))
         #  FIRE
-        if (keyClass.keyMap["fire1"] != 0):
-            self.fireFire(terrainClass)
+        if keyClass.keyMap["fire1"] == 1:
+            #print(self.canFire, len(locals()), len(globals()))
+            if self.canFire:
+                self.model.play("attack")
+                taskMgr.remove('attack_reset')
+                taskMgr.doMethodLater(0.5, self.resetPlayer, 'attack_reset')
+                self.fireFire(terrainClass)
+            self.canFire = False
+
+        if keyClass.keyMap["fire1"] == 0:
+            self.canFire = True
 
         if (keyClass.keyMap["forward"] != 0) or (keyClass.keyMap["back"]):
             if self.isMoving is False:
@@ -189,11 +142,19 @@ class Me(DirectObject):
                 self.model.stop()
                 self.model.pose("walk", 5)
                 self.isMoving = False
-
-        self.meTerrainHeight = terrainClass.terrain.getElevation(self.model.getX(),
-                                                                 self.model.getY()) * self.terrainScale
-        self.model.setZ(self.meTerrainHeight)
-
+        myX=self.model.getX()
+        myY=self.model.getY()
+        myZ=self.terrainHeight(myX,myY, terrainClass)
+        self.model.setZ(myZ)
+        #self.myTarget.setPos(3, 3, self.terrainHeight(self.myTarget.getZ()+2)  # adjustable later, not sure if there should be defaults
+        #self.myTarget.setPos(myX+10, myY, self.terrainHeight(myX+10,myY,terrainClass)+8)
+        myX=self.myTarget.getX(base.render)
+        myY=self.myTarget.getY(base.render)
+        myZ=self.terrainHeight(myX, myY, terrainClass)
+        self.orbitRing.setZ(myZ)
+        #self.myTarget.setZ(self.terrainHeight(myX, myY, terrainClass))
+        #print("model"+str(self.model.getPos()) + "target" + str(self.myTarget.getPos(base.render)) + "orbit" + str(self.orbitRing.getPos(base.render)))
+        #terrainClass.setProjectorPos((myX, myY, myZ))
         # CAMERA CONTROL#
         if base.mouseWatcherNode.hasMouse():
             # get changes in mouse position
@@ -206,10 +167,16 @@ class Me(DirectObject):
             base.win.movePointer(0, 200, 200)
             # alter model's yaw by an amount proportionate to deltaX
             self.model.setH(self.model.getH() - 0.3 * deltaX)
+            #self.myTarget.setR(self.model.getR())
+            #self.myTarget.setH(self.model.getH())
+            self.orbitRing.setH(base.camera.getH()+90)
+            #terrainClass.setProjectorPos(self.myTarget.getPos(base.render)+Vec3(0,0,8))
+            terrainClass.setProjectorPos((myX, myY, myZ+6))
             # find the new camera pitch and clamp it to a reasonable range
             self.cameraPitch = self.cameraPitch + 0.1 * deltaY
             if self.cameraPitch < -60: self.cameraPitch = -60
             if self.cameraPitch > 80: self.cameraPitch = 80
+            #print(str(self.cameraPitch))
             base.camera.setHpr(0, self.cameraPitch, 0)
             # set the camera at around model's middle
             # We should pivot around here instead of the view target which is noticebly higher
@@ -221,14 +188,22 @@ class Me(DirectObject):
 
         return Task.cont
 
+    def terrainHeight(self,x,y, terrainClass):
+        return terrainClass.terrain.getElevation(x,y) * self.terrainScale
+
     def fireFire(self, terrainClass):
-        startPos = Vec3(self.model.getX(), self.model.getY(), self.model.getZ() + 2)
-        self.fireNode.setPos(startPos)
+        #self.model.pose("walk", 5)
+        startPos = Vec3(self.model.getX(), self.model.getY(), self.model.getZ() + 4)
+        myX = self.myTarget.getX(base.render)
+        myY = self.myTarget.getY(base.render)
+        myZ = self.terrainHeight(myX,myY, terrainClass)
+        #print(str(myX),str(myY),str(myZ))
+        self.fireNode=Projectile()
+        self.fireNode.trajectory(startPos=startPos, endPos=Vec3(myX,myY,myZ), duration=1)
+
         #p = ParticleEffect()
         #p.loadConfig("particles/fireball.ptf")
         #p.start(parent=self.emptyFire, renderParent=base.render)
         # setup the projectile interval
-        self.trajectory = ProjectileInterval.ProjectileInterval(self.fireNode, startPos=startPos,
-                                                                endPos=Vec3(122, 175, 0), duration=1)
-        self.trajectory.start()
+        #self.fireNode.setDead()
         return Task.cont
