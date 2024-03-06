@@ -30,7 +30,7 @@ class chatRegulator(DirectObject):
         self.accept("p", self.getWidgetTransformsF)
         # Create GUI
         # self.frame =
-        self.chatInput = DirectEntry(initialText="Press 't' or click here to chat",
+        self.chatInput = DirectEntry(initialText="Press 't' to chat",
                                      cursorKeys=1,
                                      numLines=1,
                                      command=self.send,

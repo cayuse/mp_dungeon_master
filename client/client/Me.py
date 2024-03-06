@@ -40,6 +40,10 @@ class Me(DirectObject):
                                                      "hit": "models/pc/female_hit",
                                                      "idle": "models/pc/female_idle"})
         '''
+        self.charNode = NodePath(PandaNode("CharacterNode"))
+        self.charNode.reparentTo(base.render)
+        self.charNode.setPos(122,175,0)
+
         self.model = Actor("models/wiz/male2",
                            {"strafe": "models/wiz/male2_strafe",
                             "attack": "models/wiz/male2_attack",
@@ -49,8 +53,8 @@ class Me(DirectObject):
         # self.model.setScale(4)
         self.playernum = None
         self.timeSinceLastUpdate = 0
-        self.model.setScale((0.1, 0.1, 0.1))
-        self.model.reparentTo(base.render)
+        self.model.setScale((playerScale, playerScale, playerScale))
+        self.model.reparentTo(self.charNode)
         # self.model.setScale(.01)
         self.isMoving = False
         self.AnimControl = self.model.getAnimControl('walk')
@@ -60,17 +64,17 @@ class Me(DirectObject):
         # stream = file('models/start.yaml', 'r')
         # start = load(stream)
         # start = load('models/start.yaml', Loader=Loader)
-        self.model.setPos(122, 175, 0)
+        self.model.setPos(0, 0, 0)
         # STORE TERRAIN SCALE FOR LATER USE#
         self.terrainScale = terrainClass.terrain.getRoot().getSz()
-        base.camera.reparentTo(self.model)
+        base.camera.reparentTo(self.charNode)
         self.cameraTargetHeight = 3.0
         # How far should the camera be from Model
-        self.cameraDistance = 500
+        self.cameraDistance = 10
         # Initialize the pitch of the camera
         self.cameraPitch = 10
         self.username = "cayuse"
-        self.camDummy = self.model.attachNewNode("camDummy")
+        self.camDummy = self.charNode.attachNewNode("camDummy")
         self.camDummy.setZ(10)
         base.disableMouse()
         props = WindowProperties()
@@ -78,8 +82,8 @@ class Me(DirectObject):
         base.win.requestProperties(props)
         self.canFire = True
         self.orbitRing = NodePath("orbitRing")
-        self.orbitRing.reparentTo(self.model)
-        self.orbitRing.setPos(0, -100, 0)
+        self.orbitRing.reparentTo(self.charNode)
+        self.orbitRing.setPos(0, -10, 0)
         #self.orbitRing.setHpr(0,0,90)
         self.myTarget = NodePath(PandaNode("myTarget"))
         self.myTarget.reparentTo(self.orbitRing)
@@ -105,17 +109,17 @@ class Me(DirectObject):
         self.elapsed = globalClock.getDt()
         # base.camera.lookAt(self.actorHead)
         if keyClass.keyMap["left"] != 0:
-            self.model.setX(self.model, (self.elapsed * speed))
-            print("me " + str(self.model.getPos(base.render)) + "tgt " + str(self.myTarget.getPos(base.render)))
+            self.charNode.setX(self.charNode, (self.elapsed * speed))
+            print("me " + str(self.charNode.getPos(base.render)) + "tgt " + str(self.myTarget.getPos(base.render)))
             #print("me"+str(self.model.getX()), str(self.model.getY()), str(self.model.getZ()))
             #print("tgt"+str(self.myTarget.getX()), str(self.myTarget.getY()), str(self.myTarget.getZ()))
             #print(str(self.model.getH()), str(self.model.getP()), str(self.model.getR()))
         if keyClass.keyMap["right"] != 0:
-            self.model.setX(self.model, -(self.elapsed * speed))
+            self.charNode.setX(self.charNode, -(self.elapsed * speed))
         if keyClass.keyMap["forward"] != 0:
-            self.model.setY(self.model, -(self.elapsed * speed))
+            self.charNode.setY(self.charNode, -(self.elapsed * speed))
         if keyClass.keyMap["back"] != 0:
-            self.model.setY(self.model, (self.elapsed * speed))
+            self.charNode.setY(self.charNode, (self.elapsed * speed))
         #  FIRE
         if keyClass.keyMap["fire1"] == 1:
             #print(self.canFire, len(locals()), len(globals()))
@@ -142,10 +146,10 @@ class Me(DirectObject):
                 self.model.stop()
                 self.model.pose("walk", 5)
                 self.isMoving = False
-        myX=self.model.getX()
-        myY=self.model.getY()
+        myX=self.charNode.getX()
+        myY=self.charNode.getY()
         myZ=self.terrainHeight(myX,myY, terrainClass)
-        self.model.setZ(myZ)
+        self.charNode.setZ(myZ)
         #self.myTarget.setPos(3, 3, self.terrainHeight(self.myTarget.getZ()+2)  # adjustable later, not sure if there should be defaults
         #self.myTarget.setPos(myX+10, myY, self.terrainHeight(myX+10,myY,terrainClass)+8)
         myX=self.myTarget.getX(base.render)
@@ -166,7 +170,7 @@ class Me(DirectObject):
             # reset mouse cursor position
             base.win.movePointer(0, 200, 200)
             # alter model's yaw by an amount proportionate to deltaX
-            self.model.setH(self.model.getH() - 0.3 * deltaX)
+            self.charNode.setH(self.charNode.getH() - 0.3 * deltaX)
             #self.myTarget.setR(self.model.getR())
             #self.myTarget.setH(self.model.getH())
             self.orbitRing.setH(base.camera.getH()+90)
@@ -193,7 +197,7 @@ class Me(DirectObject):
 
     def fireFire(self, terrainClass):
         #self.model.pose("walk", 5)
-        startPos = Vec3(self.model.getX(), self.model.getY(), self.model.getZ() + 4)
+        startPos = Vec3(self.charNode.getX(), self.charNode.getY(), self.charNode.getZ() + 4)
         myX = self.myTarget.getX(base.render)
         myY = self.myTarget.getY(base.render)
         myZ = self.terrainHeight(myX,myY, terrainClass)

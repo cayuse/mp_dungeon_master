@@ -32,10 +32,12 @@ class Terrain(GeoMipTerrain):
         # self.terrain.setNear(40)
         # self.terrain.setFar(100)
         self.terrain.setFocalPoint(base.camera)
-        self.terrain.getRoot().setSz(12)
+        self.root = self.terrain.getRoot()
+
+        self.root.setSz(12)
         self.time = 0
         self.elapsed = 0
-        self.terrain.getRoot().reparentTo(base.render)
+        self.root.reparentTo(base.render)
         self.terrain.generate()
 
         self.roof = base.loader.loadModel("terrains/roof.egg")
@@ -53,8 +55,6 @@ class Terrain(GeoMipTerrain):
         self.pattern = loader.loadTexture('vfx/target.png')
         self.pattern.setWrapU(Texture.WM_clamp)
         self.pattern.setWrapV(Texture.WM_clamp)
-        self.ts1 = TextureStage('ts')
-        self.ts1.setMode(TextureStage.MDecal)
         self.targetMarker = NodePath(PandaNode("targetMarker"))
         # self.targetMarker.setPos(122, 175, 0)
         self.targetMarker.reparentTo(base.render)
@@ -74,14 +74,30 @@ class Terrain(GeoMipTerrain):
         self.ts = TextureStage('ts')
         self.ts.setSort(1)
         self.ts.setMode(TextureStage.MDecal)
-        self.terrain.getRoot().projectTexture(self.ts, self.pattern, self.proj)
+        self.root.projectTexture(self.ts, self.pattern, self.proj)
 
-        #self.terrain.getRoot().setTexScale(ts1,10,10)
-        #self.terrain.getRoot().setTexPos(ts1,122,175,.1)
-        #self.terrain.getRoot().setTexture(ts1, pattern)
+        #the following will add a second projection, it isn't really necessary, just testing if it's psosible
+        '''
+        self.pattern2 = loader.loadTexture('vfx/plasm2.png')
+        self.pattern2.setWrapU(Texture.WM_clamp)
+        self.pattern2.setWrapV(Texture.WM_clamp)
+        self.ts2 = TextureStage('ts2')
+        self.ts2.setSort(1)
+        self.ts2.setMode(TextureStage.MDecal)
+        self.proj2 = base.render.attachNewNode(LensNode('proj2'))
+        self.lens2=PerspectiveLens()
+        self.proj2.node().setLens(self.lens2)
+        self.proj2.reparentTo(self.targetMarker)
+        self.proj2.setPos(0,0,0)
+        self.proj2.setHpr(0,-90,0)
+        self.root.projectTexture(self.ts2, self.pattern2, self.proj2)
+        #self.root.setTexScale(ts1,10,10)
+        #self.root.setTexPos(ts1,122,175,.1)
+        #self.root.setTexture(ts1, pattern)
+        '''
         # projectile
         #self.emptyFire = NodePath("EmptyFire")
-        # self.terrain.getRoot().setTexture(myTexture) #pjb UNcomment this line out if you want to set texture directly
+        # self.root.setTexture(myTexture) #pjb UNcomment this line out if you want to set texture directly
         # taskMgr.doMethodLater(5, self.updateTerrain, 'Update the Terrain')
         # taskMgr.add(self.updateTerrain, "update")
     def setProjectorPos(self, pos):
@@ -96,6 +112,3 @@ class Terrain(GeoMipTerrain):
             self.terrain.update()
             self.time = 0
         return Task.again
-
-    def getRoot(self):
-        return self.terrain.getRoot()
