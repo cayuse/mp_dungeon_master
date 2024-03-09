@@ -44,10 +44,10 @@ class Me(DirectObject):
         self.charNode.reparentTo(base.render)
         self.charNode.setPos(122,175,0)
 
-        self.model = Actor("models/wiz/male2",
-                           {"strafe": "models/wiz/male2_strafe",
-                            "attack": "models/wiz/male2_attack",
-                            "walk": "models/wiz/male2_walk"})
+        self.model = Actor("models/pc/male2",
+                           {"strafe": "models/pc/male2_strafe",
+                            "attack": "models/pc/male2_attack",
+                            "walk": "models/pc/male2_walk"})
 
         # self.actorHead = self.model.exposeJoint(None, 'modelRoot', 'Joint8')
         # self.model.setScale(4)
