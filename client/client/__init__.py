@@ -4,3 +4,4 @@ from .Me import Me
 from .Terrain import Terrain
 from .Keys import Keys
 from .Projectile import Projectile
+from .Character import Character

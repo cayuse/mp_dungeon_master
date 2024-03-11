@@ -1,11 +1,11 @@
 from ..myPan.myPan import base, modelPath, playerScale
 from direct.showbase.DirectObject import DirectObject
+from panda3d.core import AnimControl
 from panda3d.core import NodePath, PandaNode
-from .Character import Character
 from direct.actor.Actor import Actor
+from .playerCharacter import playerCharacter
 
-
-class Wizard(Character):
+class Wizard(playerCharacter):
     def __init__(self):
         super().__init__()
 
@@ -21,5 +21,6 @@ class Wizard(Character):
                             })
 
         self.model.setScale((playerScale, playerScale, playerScale))
-        self.model.reparentTo(self.charNode)
+        #self.AnimControl.setPlayRate(0.05)
+        self.model.setBlend(frameBlend=1)
 

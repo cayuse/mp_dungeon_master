@@ -4,7 +4,7 @@ from .Projectile import Projectile
 # import direct.directbase.DirectStart
 from panda3d.core import *
 from panda3d.core import Texture
-from panda3d.core import WindowProperties, Point3, Vec3, BitMask32, NodePath
+from panda3d.core import WindowProperties, Point3, Vec3, BitMask32, NodePath, AnimControl
 from panda3d.core import CollisionTraverser, CollisionHandlerPusher, CollisionNode, CollisionSphere
 from direct.distributed.PyDatagram import PyDatagram
 from direct.distributed.PyDatagramIterator import PyDatagramIterator

@@ -1,10 +1,11 @@
 from ..myPan.myPan import base, modelPath, playerScale
 from direct.showbase.DirectObject import DirectObject
 from panda3d.core import NodePath, PandaNode
-from .Character import Character
 from direct.actor.Actor import Actor
+from .playerCharacter import playerCharacter
 
-class Warrior(Character):
+
+class Warrior(playerCharacter):
     def __init__(self):
         super().__init__()
 
@@ -20,5 +21,3 @@ class Warrior(Character):
                             })
 
         self.model.setScale((playerScale, playerScale, playerScale))
-        self.model.reparentTo(self.charNode)
-

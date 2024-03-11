@@ -21,23 +21,26 @@ except ImportError:
 
 class Terrain(GeoMipTerrain):
     def __init__(self):
+        self.terrainNode = NodePath(PandaNode("TerrainNode"))
+        self.terrainNode.reparentTo(base.render)
         self.terrain = GeoMipTerrain("mySimpleTerrain")
         self.terrain.setHeightfield(Filename("terrains/ramp_HM.png"))
         self.terrain.setColorMap(Filename("terrains/red-rock.jpg"))  # pjb comment this line out if you want to set texture directly
         #myTexture = loader.loadTexture("terrains/red-rock.jpg") #pjb UNcomment this line out if you want to set texture directly
         #ts1 = TextureStage('ts')
         #self.terrain.getRoot().setTexture(ts1, myTexture)
+        #self.terrain.reparentTo(self.terrainNode)
         self.terrain.setBlockSize(32)
         self.terrain.setBruteforce(True)
         # self.terrain.setNear(40)
         # self.terrain.setFar(100)
         self.terrain.setFocalPoint(base.camera)
         self.root = self.terrain.getRoot()
-
+        self.root.reparentTo(self.terrainNode)
         self.root.setSz(12)
         self.time = 0
         self.elapsed = 0
-        self.root.reparentTo(base.render)
+        #self.root.reparentTo(base.render)
         self.terrain.generate()
 
         self.roof = base.loader.loadModel("terrains/roof.egg")
@@ -51,7 +54,7 @@ class Terrain(GeoMipTerrain):
         #self.myMaterial.setAmbient((0, 1, 0, 1))  # Make this material blue
         self.myMaterial.setEmission((0, 0.2, 0, 1))
         self.roof.setMaterial(self.myMaterial)  # Apply the material to this nodePath
-        self.roof.reparentTo(base.render)
+        self.roof.reparentTo(self.terrainNode)
         self.pattern = loader.loadTexture('vfx/target.png')
         self.pattern.setWrapU(Texture.WM_clamp)
         self.pattern.setWrapV(Texture.WM_clamp)
