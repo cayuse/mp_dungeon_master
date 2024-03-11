@@ -4,6 +4,18 @@ from direct.distributed.PyDatagram import PyDatagram
 from direct.showbase.DirectObject import DirectObject
 from direct.task.Task import Task
 import re
+from dataclasses import dataclass
+
+
+@dataclass
+class playerPacket:
+    type = "None"
+    message = "None"
+    playerNum = 0
+    Pos = LPoint3f(0, 0, 0)
+    Hpr = LVecBase3f(0, 0, 0)
+    playerName = None
+    characterType = None
 
 class Server(QueuedConnectionManager):
 	def __init__(self,p,b):

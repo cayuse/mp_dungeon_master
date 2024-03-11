@@ -1,4 +1,4 @@
-from ..myPan.myPan import playerScale
+from ..myPan.myPan import playerScale, base
 from direct.showbase.DirectObject import DirectObject
 from direct.actor.Actor import Actor
 class Player(DirectObject):
@@ -11,7 +11,7 @@ class Player(DirectObject):
         self.model = Actor("models/ralph",
                            {"run": "models/ralph-run",
                             "walk": "models/ralph-walk"})
-        self.model.reparentTo(render)
+        self.model.reparentTo(base.render)
         self.model.setScale(playerScale)
         self.isMoving = False
         self.AnimControl = self.model.getAnimControl('walk')
