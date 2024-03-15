@@ -11,3 +11,19 @@ https://www.alice.org/gallery/index.php?page=gallery/Beach/index
 
 openart
 https://opengameart.org/content/fire
+
+maybe an interesting project to look at
+https://github.com/programmers-quest
+
+
+list of panda3d stuff
+https://github.com/Moguri/awesome-panda3d?tab=readme-ov-file
+
+some weird model info
+https://github.com/Germanunkol/CCD-IK-Panda3D?tab=readme-ov-file
+
+some simple examples that probably don't help, but they are interesting anyway
+https://codeberg.org/entikan/panda3d-simple-game-examples
+
+toontown code
+https://github.com/nate97/toontown-src-py3.0/tree/master/toontown
