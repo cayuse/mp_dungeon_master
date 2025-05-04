@@ -4,173 +4,220 @@ from direct.distributed.PyDatagram import PyDatagram
 from direct.showbase.DirectObject import DirectObject
 from direct.task.Task import Task
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from typing import Optional
 
 
 @dataclass
 class playerPacket:
-    type = "None"
-    message = "None"
-    playerNum = 0
-    Pos = LPoint3f(0, 0, 0)
-    Hpr = LVecBase3f(0, 0, 0)
-    playerName = None
-    characterType = None
+    type: str = "None"
+    message: str = "None"
+    playerNum: int = 0
+    Pos: LPoint3f = field(default_factory=lambda: LPoint3f(0, 0, 0))
+    Hpr: LVecBase3f = field(default_factory=lambda: LVecBase3f(0, 0, 0))
+    playerName: Optional[str] = None
+    characterType: Optional[str] = None
 
 class Server(QueuedConnectionManager):
-	def __init__(self,p,b):
-		self.cManager = QueuedConnectionManager()
-		self.cListener = QueuedConnectionListener(self.cManager, 0)
-		self.cReader = QueuedConnectionReader(self.cManager, 0)
-		self.cWriter = ConnectionWriter(self.cManager,0)
-		self.port = p
-		self.backlog = b
-		self.socket = self.cManager.openTCPServerRendezvous(self.port,self.backlog)
-		self.cListener.addConnection(self.socket)
-		print(str(self))
-	def tskReaderPolling(self,regClass): #This function listens for any data coming on already established functions
-		if self.cReader.dataAvailable():
-			self.datagram=NetDatagram()  # catch the incoming data in this instance
-		# Check the return value; if we were threaded, someone else could have
-		# snagged this data before we did
-			if self.cReader.getData(self.datagram):
-				regClass.updateData(self.datagram.getConnection(), self.datagram,self)
-					
+	def __init__(self, port: int, backlog: int):
+		super().__init__()
+		self.cListener = QueuedConnectionListener(self, 0)
+		self.cReader = QueuedConnectionReader(self, 0)
+		self.cWriter = ConnectionWriter(self, 0)
+		self.port = port
+		self.backlog = backlog
+		try:
+			self.socket = self.openTCPServerRendezvous(self.port, self.backlog)
+			self.cListener.addConnection(self.socket)
+			print(f"Server started on port {self.port}")
+		except Exception as e:
+			print(f"Failed to start server: {e}")
+			raise
+
+	def tskReaderPolling(self, regClass: 'PlayerReg') -> Task:
+		try:
+			if self.cReader.dataAvailable():
+				self.datagram = NetDatagram()
+				if self.cReader.getData(self.datagram):
+					regClass.updateData(self.datagram.getConnection(), self.datagram, self)
+		except Exception as e:
+			print(f"Error in reader polling: {e}")
 		return Task.cont
-	def tskListenerPolling(self,regClass): #This Function checks to see if there are any new clients and adds their connection
-		#if theres a new connection add it to our listener
-		if self.cListener.newConnectionAvailable():
-			self.rendezvous = PointerToConnection()
-			self.netAddress = NetAddress()
-			self.newConnection = PointerToConnection()
-			if self.cListener.getNewConnection(self.rendezvous,self.netAddress,self.newConnection):
-				self.newConnection = self.newConnection.p()
-				regClass.PlayerList.append(player())
-				regClass.PlayerList[regClass.active].connectionID = self.newConnection
-				regClass.sendInitialInfo(regClass.active, self)
-				regClass.active += 1
-				self.cReader.addConnection(self.newConnection)     # Begin reading connection
-				print('connection received')
+
+	def tskListenerPolling(self, regClass: 'PlayerReg') -> Task:
+		try:
+			if self.cListener.newConnectionAvailable():
+				self.rendezvous = PointerToConnection()
+				self.netAddress = NetAddress()
+				self.newConnection = PointerToConnection()
+				if self.cListener.getNewConnection(self.rendezvous, self.netAddress, self.newConnection):
+					self.newConnection = self.newConnection.p()
+					regClass.PlayerList.append(player())
+					regClass.PlayerList[regClass.active].connectionID = self.newConnection
+					regClass.sendInitialInfo(regClass.active, self)
+					regClass.active += 1
+					self.cReader.addConnection(self.newConnection)
+					print(f'New connection received from {self.netAddress}')
+		except Exception as e:
+			print(f"Error in listener polling: {e}")
 		return Task.cont
 
 	
+# Constants
+UPDATE_INTERVAL = 0.1  # seconds between position updates
+MAX_PLAYERS = 100  # maximum number of players allowed
+
 class PlayerReg(DirectObject): #This class will hold anything that is related to regulating clients
 	def __init__(self):
-		self.PlayerList = []
-		self.active = 0
-		self.timeSinceLastUpdate = 0
+		self.PlayerList: list[player] = []
+		self.active: int = 0
+		self.timeSinceLastUpdate: float = 0
 		
 	
-	def updatePlayers(self,serverClass,data,type):
+	def updatePlayers(self, serverClass: Server, data: str, type: str) -> Task:
 		if type == "positions":
-			#keep players updated on their position
-			self.elapsed = globalClock.getDt()
-			self.timeSinceLastUpdate += self.elapsed
-			if self.timeSinceLastUpdate > 0.1:
-				if self.active:
-					self.datagram = PyDatagram()
-					self.datagram.addString("update")
-					#add the number of players
-					self.datagram.addFloat64(self.active)
-					#add every players current position
-					for k in range(self.active):
-						self.datagram.addFloat64(self.PlayerList[k].currentPos['x'])
-						self.datagram.addFloat64(self.PlayerList[k].currentPos['y'])
-						self.datagram.addFloat64(self.PlayerList[k].currentPos['z'])
-						self.datagram.addFloat64(self.PlayerList[k].currentPos['h'])
-						self.datagram.addFloat64(self.PlayerList[k].currentPos['p'])
-						self.datagram.addFloat64(self.PlayerList[k].currentPos['r'])
-						self.datagram.addBool(self.PlayerList[k].isMoving)
-					for k in self.PlayerList:
-						self.conn = k.connectionID
-						serverClass.cWriter.send(self.datagram,self.conn)
-				self.timeSinceLastUpdate = 0
+			try:
+				self.elapsed = globalClock.getDt()
+				self.timeSinceLastUpdate += self.elapsed
+				if self.timeSinceLastUpdate > UPDATE_INTERVAL:
+					if self.active:
+						self.datagram = PyDatagram()
+						self.datagram.addString("update")
+						self.datagram.addFloat64(self.active)
+						for k in range(self.active):
+							self.datagram.addFloat64(self.PlayerList[k].currentPos['x'])
+							self.datagram.addFloat64(self.PlayerList[k].currentPos['y'])
+							self.datagram.addFloat64(self.PlayerList[k].currentPos['z'])
+							self.datagram.addFloat64(self.PlayerList[k].currentPos['h'])
+							self.datagram.addFloat64(self.PlayerList[k].currentPos['p'])
+							self.datagram.addFloat64(self.PlayerList[k].currentPos['r'])
+							self.datagram.addBool(self.PlayerList[k].isMoving)
+						for k in self.PlayerList:
+							self.conn = k.connectionID
+							serverClass.cWriter.send(self.datagram, self.conn)
+					self.timeSinceLastUpdate = 0
+			except Exception as e:
+				print(f"Error updating player positions: {e}")
 			return Task.cont
 		
 		if type == "chat":
-			#Keep players up to date with all the chat thats goin on
-			#self.iterator = data
-			self.datagram = PyDatagram()
-			self.datagram.addString("chat")
-			self.text = data
-			self.datagram.addString(self.text)
-			print(self.text,' ',str(serverClass))
-			for k in self.PlayerList:
-				serverClass.cWriter.send(self.datagram,k.connectionID)
+			try:
+				self.datagram = PyDatagram()
+				self.datagram.addString("chat")
+				self.text = data
+				self.datagram.addString(self.text)
+				print(f"Chat message: {self.text}")
+				for k in self.PlayerList:
+					serverClass.cWriter.send(self.datagram, k.connectionID)
+			except Exception as e:
+				print(f"Error sending chat message: {e}")
 
 				
 		
-	def updateData(self,connection, datagram,serverClass):
-		self.iterator = PyDatagramIterator(datagram)
-		self.type = self.iterator.getString()
-		if self.type == "positions":
-			for k in self.PlayerList:
-				if (k.connectionID == connection):
-					k.currentPos['x'] = self.iterator.getFloat64()
-					k.currentPos['y'] = self.iterator.getFloat64()
-					k.currentPos['z'] = self.iterator.getFloat64()
-					k.currentPos['h'] = self.iterator.getFloat64()
-					k.currentPos['p'] = self.iterator.getFloat64()
-					k.currentPos['r'] = self.iterator.getFloat64()
-					k.isMoving = self.iterator.getBool()
+	def updateData(self, connection, datagram: NetDatagram, serverClass: Server) -> None:
+		try:
+			self.iterator = PyDatagramIterator(datagram)
+			self.type = self.iterator.getString()
+			if self.type == "positions":
+				for k in self.PlayerList:
+					if k.connectionID == connection:
+						k.currentPos['x'] = self.iterator.getFloat64()
+						k.currentPos['y'] = self.iterator.getFloat64()
+						k.currentPos['z'] = self.iterator.getFloat64()
+						k.currentPos['h'] = self.iterator.getFloat64()
+						k.currentPos['p'] = self.iterator.getFloat64()
+						k.currentPos['r'] = self.iterator.getFloat64()
+						k.isMoving = self.iterator.getBool()
 
-		if self.type == "chat":
-			msg = self.iterator.getString()
-			self.chatHelper(connection, serverClass, msg)
+			elif self.type == "chat":
+				msg = self.iterator.getString()
+				self.chatHelper(connection, serverClass, msg)
 
-		if self.type == "newname":
-			print("trying new name")
-			name = self.iterator.getString()
-			print("newname recieved: " + name)
-			for k in self.PlayerList:
-				if (k.connectionID == connection):
-					k.username = name
+			elif self.type == "newname":
+				name = self.iterator.getString()
+				print(f"New name received: {name}")
+				for k in self.PlayerList:
+					if k.connectionID == connection:
+						k.username = name
+		except Exception as e:
+			print(f"Error updating data: {e}")
 
-	def chatHelper(self, connection, serverClass, msg):
-		slash = re.compile('^/')
-		if slash.match(msg):
-			#message is a console command
-			self.commandHelper(connection,serverClass,msg)
-		else:
-			#message is a chat msg.
-			for k in self.PlayerList:
-				if (k.connectionID == connection):
-					msg = k.username + ": " + msg
-					self.updatePlayers(serverClass,msg,"chat")
+	def chatHelper(self, connection, serverClass: Server, msg: str) -> None:
+		try:
+			slash = re.compile('^/')
+			if slash.match(msg):
+				self.commandHelper(connection, serverClass, msg)
+			else:
+				for k in self.PlayerList:
+					if k.connectionID == connection:
+						msg = f"{k.username}: {msg}"
+						self.updatePlayers(serverClass, msg, "chat")
+		except Exception as e:
+			print(f"Error in chat helper: {e}")
 
-	def commandHelper(self, connection, serverClass, msg):
-		match msg.split(' ', 1)[0]:
-			case "/username":
-				print("got new username" + msg)
+	def commandHelper(self, connection, serverClass: Server, msg: str) -> None:
+		try:
+			command = msg.split(' ', 1)[0]
+			if command == "/username":
 				for idx, k in enumerate(self.PlayerList):
 					if k.connectionID == connection:
 						name = k.username
 						self.PlayerList[idx].username = msg.split(' ', 1)[1]
-						msg = name + " is now know as " + self.PlayerList[idx].username
-						self.updatePlayers(serverClass,msg, "chat")
-			case "/quit":
-				pass #this should be a quit command for example
+						msg = f"{name} is now known as {self.PlayerList[idx].username}"
+						self.updatePlayers(serverClass, msg, "chat")
+			elif command == "/quit":
+				self.handlePlayerQuit(connection, serverClass)
+		except Exception as e:
+			print(f"Error in command helper: {e}")
 
+	def handlePlayerQuit(self, connection, serverClass: Server) -> None:
+		try:
+			for idx, k in enumerate(self.PlayerList):
+				if k.connectionID == connection:
+					msg = f"{k.username} has left the game"
+					self.updatePlayers(serverClass, msg, "chat")
+					del self.PlayerList[idx]
+					self.active -= 1
+					break
+		except Exception as e:
+			print(f"Error handling player quit: {e}")
 
-	def sendInitialInfo(self,i,server): #Initialize the new Player
-		self.con = self.PlayerList[i].connectionID #set the connection to the player's connection
-		self.datagram = PyDatagram() #create a datagram instance
-		self.datagram.addString("init") #specify to the client that this is an init type packet
-		self.datagram.addUint8(self.active) #specify the player's number (not sure why this is here)
-		self.datagram.addFloat64(i) #specify number of players (same as player's number)
-		for k in self.PlayerList: #Add the current position of everyone in the game world and send it
-			self.datagram.addString(k.username)
-			self.datagram.addFloat64(k.currentPos['x'])
-			self.datagram.addFloat64(k.currentPos['y'])
-			self.datagram.addFloat64(k.currentPos['z'])
-		server.cWriter.send(self.datagram,self.con)
+	def sendInitialInfo(self, i: int, server: Server) -> None:
+		try:
+			if i >= len(self.PlayerList):
+				raise IndexError(f"Player index {i} out of range")
+				
+			self.con = self.PlayerList[i].connectionID
+			self.datagram = PyDatagram()
+			self.datagram.addString("init")
+			self.datagram.addUint8(self.active)
+			self.datagram.addFloat64(i)
+			for k in self.PlayerList:
+				self.datagram.addString(k.username)
+				self.datagram.addFloat64(k.currentPos['x'])
+				self.datagram.addFloat64(k.currentPos['y'])
+				self.datagram.addFloat64(k.currentPos['z'])
+			server.cWriter.send(self.datagram, self.con)
+		except Exception as e:
+			print(f"Error sending initial info: {e}")
 
 class player(DirectObject):
 	def __init__(self):
-		self.connectionID = 0
-		self.username = ""
-		self.currentPos = {'x':0,'y':0,'z':0,'h':0,'p':0,'r':0} #also stores rotation
-		self.isMoving = False #if its moving the clients will need to know to animate it it (not implemented yet)
+		super().__init__()
+		self.connectionID: int = 0
+		self.username: str = ""
+		self.currentPos: dict[str, float] = {
+			'x': 0.0,
+			'y': 0.0,
+			'z': 0.0,
+			'h': 0.0,
+			'p': 0.0,
+			'r': 0.0
+		}
+		self.isMoving: bool = False
+
+	def __str__(self) -> str:
+		return f"Player(username='{self.username}', pos={self.currentPos}, moving={self.isMoving})"
 
 
 		

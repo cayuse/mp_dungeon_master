@@ -37,6 +37,6 @@ class Client(DirectObject):
             # Check the return value; if we were threaded, someone else could have
             # snagged this data before we did
             if self.cReader.getData(self.datagram):
-                playerRegulator.ProcessData(self.datagram, m, chatClass)
+                playerRegulator.tskProcessData(self.datagram, m, chatClass)
                 self.datagram.clear()
         return Task.cont
